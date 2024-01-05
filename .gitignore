@@ -75,3 +75,27 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 # End of https://www.toptal.com/developers/gitignore/api/unity
+
+cublas64_11.dll
+cublasLt64_11.dll
+cudart64_110.dll
+cudnn64_8.dll
+cudnn_cnn_infer64_8.dll
+cudnn_ops_infer64_8.dll
+cufft64_10.dll
+directml.dll
+dnn_model_2_0_op11.onnx
+nvinfer.dll
+nvinfer_plugin.dll
+nvrtc-builtins64_114.dll
+nvrtc64_112_0.dll
+onnxruntime.dll
+onnxruntime_providers_cuda.dll
+onnxruntime_providers_shared.dll
+onnxruntime_providers_tensorrt.dll
+
+Assets/Third-Party-Notices.txt
+Assets/Third-Party-Notices.txt.meta
+
+/[Aa]ssets/AzureKinectExamples/*
+/[Aa]ssets/AzureKinectExamples.meta
