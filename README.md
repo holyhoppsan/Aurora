@@ -4,6 +4,17 @@
 
 Submission for the LightUp 2024 festival in Skagastrond, Iceland
 
+## Inspiration
+
+### Nighttime Skybox 
+
+- https://www.youtube.com/watch?v=O7KTlSVDyu4
+
+### Grass and Flowers
+
+- https://www.youtube.com/watch?v=jKseULf3z0c
+
+
 ## License
 
 ### Art
