@@ -14,6 +14,10 @@ Submission for the LightUp 2024 festival in Skagastrond, Iceland
 
 - https://www.youtube.com/watch?v=jKseULf3z0c
 
+### Water plane
+
+- https://ameye.dev/notes/stylized-water-shader/
+
 
 ## License
 
