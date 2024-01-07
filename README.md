@@ -18,6 +18,10 @@ Submission for the LightUp 2024 festival in Skagastrond, Iceland
 
 - https://ameye.dev/notes/stylized-water-shader/
 
+### Snow and blizzard
+
+- https://danielilett.com/2021-03-25-tut5-16-snow-layers/
+
 
 ## License
 
