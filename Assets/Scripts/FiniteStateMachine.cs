@@ -1,15 +1,14 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace FSM
 {
-    public interface IState
+    public abstract class FSMState : MonoBehaviour
     {
-        void Enter();
-        void Update();
-        void Exit();
+        public abstract void Enter();
+        public abstract void Tick();
+        public abstract void Exit();
     }
 
     public class FiniteStateMachine : MonoBehaviour
@@ -19,52 +18,37 @@ namespace FSM
 
         [SerializeField]
         private bool _debugEnabled = false;
-        private Dictionary<string, IState> _states;
 
-        private string _currentStateId;
+        [SerializeField]
+        private List<FSMState> _states = new List<FSMState>();
 
-        public string CurrenState
+        private FSMState _currentState;
+
+        public void Transition<T>() where T : FSMState
         {
-            get
+            if (_currentState != null)
             {
-                return _currentStateId;
+                _currentState.Exit();
             }
 
-            set
+            FSMState newState = FindStateOfType<T>();
+            if (newState == null)
             {
-                Transition(value);
-            }
-        }
-
-        private void Transition(string state)
-        {
-            IState currentState = null;
-            if (!_states.TryGetValue(_currentStateId, out currentState))
-            {
-                throw new KeyNotFoundException($"Could find current state '{_currentStateId}' to exit.");
-            }
-
-            currentState.Exit();
-
-            IState newState = null;
-            if (!_states.TryGetValue(state, out newState))
-            {
-                throw new KeyNotFoundException($"Could find current state '{state}' to enter.");
+                throw new KeyNotFoundException($"Couldn't find current state '{typeof(T)}' to enter.");
             }
 
             newState.Enter();
-            _currentStateId = state;
+            _currentState = newState;
+        }
+
+        private FSMState FindStateOfType<T>() where T : FSMState
+        {
+            return _states.Find(state => state is T);
         }
 
         private void Awake()
         {
-            _states = new Dictionary<string, IState>();
-
-            var logoScreenState = new LogoScreenState();
-            _states.Add(logoScreenState.GetType().Name, logoScreenState);
-
-            _currentStateId = _startingState;
-            _states[_currentStateId].Enter();
+            Transition<LogoScreenState>();
         }
 
         // Start is called before the first frame update
@@ -76,14 +60,14 @@ namespace FSM
         // Update is called once per frame
         private void Update()
         {
-            _states[_currentStateId].Update();
+            _currentState.Tick();
         }
 
         private void OnGUI()
         {
             if (_debugEnabled)
             {
-                GUI.Label(new Rect(10, 10, 300, 20), $"CurrentState: {CurrenState}.");
+                GUI.Label(new Rect(10, 10, 300, 20), $"CurrentState: {_currentState.GetType().Name}.");
             }
         }
     }
