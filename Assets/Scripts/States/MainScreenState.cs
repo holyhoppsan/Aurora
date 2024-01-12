@@ -6,9 +6,17 @@ public class MainScreenState : FSMState
 {
     [SerializeField]
     private PlayableDirector _director;
+
+    [SerializeField]
+    private GameObject _background;
+
+    [SerializeField]
+    private GameObject _logo;
+
     public override void Enter()
     {
-
+        _background.SetActive(true);
+        _logo.SetActive(true);
     }
 
     public override void Tick()
@@ -21,11 +29,12 @@ public class MainScreenState : FSMState
 
     public override void Exit()
     {
-
+        _background.SetActive(true);
+        _logo.SetActive(true);
     }
 
     public void OnMainMenuAnimationComplete()
     {
-        _fsm.Transition<LogoScreenState>();
+        _fsm.Transition<HeroScreenState>();
     }
 }
