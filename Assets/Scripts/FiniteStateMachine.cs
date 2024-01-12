@@ -6,6 +6,12 @@ namespace FSM
 {
     public abstract class FSMState : MonoBehaviour
     {
+        protected FiniteStateMachine _fsm;
+        void Awake()
+        {
+            _fsm = GetComponentInParent<FiniteStateMachine>();
+        }
+
         public abstract void Enter();
         public abstract void Tick();
         public abstract void Exit();
@@ -48,7 +54,8 @@ namespace FSM
 
         private void Awake()
         {
-            Transition<LogoScreenState>();
+            _currentState = _states.Find(state => state.GetType().Name == _startingState);
+            _currentState.Enter();
         }
 
         // Start is called before the first frame update
