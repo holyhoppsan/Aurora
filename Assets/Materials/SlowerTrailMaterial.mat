@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TrailMaterial
+  m_Name: SlowerTrailMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 6ab662e06f1594112b64c41a525d360c,
     type: 3}
   m_Parent: {fileID: 0}
