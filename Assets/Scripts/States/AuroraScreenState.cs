@@ -2,32 +2,33 @@ using FSM;
 using UnityEngine;
 using Cinemachine;
 
-public class LogoScreenState : FSMState
+public class AuroraScreenState : FSMState
 {
+    [SerializeField]
+    private CinemachineVirtualCameraBase _auroraCam;
+
     [SerializeField]
     private CinemachineVirtualCameraBase _flowerCam;
 
     [SerializeField]
     private CinemachineVirtualCameraBase _mainCam;
+
     public override void Enter()
     {
+        _auroraCam.Priority = 1;
+        _flowerCam.Priority = 0;
+        _mainCam.Priority = 0;
     }
 
     public override void Tick()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // Replace with your condition
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            TriggerBlend();
         }
     }
 
     public override void Exit()
     {
 
-    }
-
-    private void TriggerBlend()
-    {
-        _fsm.Transition<LogoScreenState>();
     }
 }
