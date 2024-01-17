@@ -6,6 +6,10 @@ Submission for the LightUp 2024 festival in Skagastrond, Iceland
 
 ## Inspiration
 
+### Texture rendering to material
+
+https://www.youtube.com/watch?v=o7bFQAIK5Tk
+
 ### Nighttime Skybox 
 
 - https://www.youtube.com/watch?v=O7KTlSVDyu4
