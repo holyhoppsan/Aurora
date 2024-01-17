@@ -9,7 +9,8 @@ using TMPro;
 public class EditorKinectLoader
 {
     private static string _prefabPath = "Assets/Prefabs/KinectController.prefab";
-    static EditorKinectLoader() 
+    private static string _mainScene = "MainScene";
+    static EditorKinectLoader()
     {
         EditorSceneManager.sceneOpened += SceneOpenedCallback;
         EditorSceneManager.sceneSaving += SceneSavingCallback;
@@ -18,15 +19,18 @@ public class EditorKinectLoader
 
     private static void SceneSavedCallback(Scene scene)
     {
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(_prefabPath);
-        if(prefab != null)
+        if (scene.name == _mainScene)
         {
-            foreach(var obj in scene.GetRootGameObjects())
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(_prefabPath);
+            if (prefab != null)
             {
-                if(PrefabUtility.GetCorrespondingObjectFromSource(obj) == prefab)
+                foreach (var obj in scene.GetRootGameObjects())
                 {
-                    obj.hideFlags = HideFlags.None;
-                    return;
+                    if (PrefabUtility.GetCorrespondingObjectFromSource(obj) == prefab)
+                    {
+                        obj.hideFlags = HideFlags.None;
+                        return;
+                    }
                 }
             }
         }
@@ -34,16 +38,19 @@ public class EditorKinectLoader
 
     private static void SceneSavingCallback(Scene scene, string path)
     {
-        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(_prefabPath);
-        if(prefab != null)
+        if (scene.name == _mainScene)
         {
-            foreach(var obj in scene.GetRootGameObjects())
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(_prefabPath);
+            if (prefab != null)
             {
-                if(PrefabUtility.GetCorrespondingObjectFromSource(obj) == prefab)
+                foreach (var obj in scene.GetRootGameObjects())
                 {
-                    PrefabUtility.ApplyPrefabInstance(obj, InteractionMode.UserAction);
-                    obj.hideFlags = HideFlags.DontSave;
-                    return;
+                    if (PrefabUtility.GetCorrespondingObjectFromSource(obj) == prefab)
+                    {
+                        PrefabUtility.ApplyPrefabInstance(obj, InteractionMode.UserAction);
+                        obj.hideFlags = HideFlags.DontSave;
+                        return;
+                    }
                 }
             }
         }
@@ -51,23 +58,26 @@ public class EditorKinectLoader
 
     private static void SceneOpenedCallback(Scene scene, OpenSceneMode mode)
     {
-        if(AssetDatabase.IsValidFolder("Assets/AzureKinectExamples"))
+        if (scene.name == _mainScene)
         {
-            Debug.Log("Kinect folder found");
-            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(_prefabPath);
-            if(prefab != null)
+            if (AssetDatabase.IsValidFolder("Assets/AzureKinectExamples"))
             {
-                var prefabInstance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
-                Debug.Log("Kinect Prefab Loaded Successfully");
+                Debug.Log("Kinect folder found");
+                GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(_prefabPath);
+                if (prefab != null)
+                {
+                    var prefabInstance = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+                    Debug.Log("Kinect Prefab Loaded Successfully");
+                }
+                else
+                {
+                    Debug.LogError("Unable to instantiate the kinect prefab");
+                }
             }
             else
             {
-                Debug.LogError("Unable to instantiate the kinect prefab");
+                Debug.Log("No Kinect folder found");
             }
-        }
-        else
-        {
-            Debug.Log("No Kinect folder found");
         }
     }
 }
