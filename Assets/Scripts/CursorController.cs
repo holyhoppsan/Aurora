@@ -3,6 +3,9 @@ using UnityEngine;
 public class CursorController : MonoBehaviour
 {
     [SerializeField]
+    private bool _playDefaultAnimation = true;
+
+    [SerializeField]
     private Vector2 _velocity;
 
     [SerializeField]
@@ -42,16 +45,20 @@ public class CursorController : MonoBehaviour
     void Update()
     {
 
-        if (gameObject.transform.position.x > 10.0f)
+        if (_playDefaultAnimation)
         {
-            _velocity.x *= -1.0f;
+            if (gameObject.transform.position.x > 10.0f)
+            {
+                _velocity.x *= -1.0f;
+            }
+
+            if (gameObject.transform.position.x < -10.0f)
+            {
+                _velocity.x *= -1.0f;
+            }
+
+            gameObject.transform.position += new Vector3(_velocity.x * Time.deltaTime, 0.0f, 0.0f);
         }
 
-        if (gameObject.transform.position.x < -10.0f)
-        {
-            _velocity.x *= -1.0f;
-        }
-
-        gameObject.transform.position += new Vector3(_velocity.x * Time.deltaTime, 0.0f, 0.0f);
     }
 }
