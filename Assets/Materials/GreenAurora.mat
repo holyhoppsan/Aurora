@@ -118,15 +118,15 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _WobbleAmount: 0.957
-    - _WobbleDistance: 0.4
-    - _WobbleFrequency: 10
-    - _WobbleSpeed: 0.3
+    - _WobbleAmount: 0.483
+    - _WobbleDistance: 0.5
+    - _WobbleFrequency: 12
+    - _WobbleSpeed: 0.4
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 2.3773582, g: 0, b: 0.47489423, a: 1}
+    - _Color: {r: 0.12531693, g: 2.3773582, b: 0, a: 1}
     - _DissolveOffset: {r: 0.005, g: 0.005, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Lerp: {r: 1, g: 0, b: 0, a: 0}
