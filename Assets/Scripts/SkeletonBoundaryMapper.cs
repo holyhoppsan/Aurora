@@ -1,7 +1,5 @@
 using UnityEngine;
-using System.Collections;
 using com.rfilkov.kinect;
-
 
 namespace Aurora
 {
@@ -23,6 +21,11 @@ namespace Aurora
         [Tooltip("Body scale factors in X,Y,Z directions.")]
         public Vector3 scaleFactors = Vector3.one;
 
+        [SerializeField]
+        private Transform _leftTransform;
+
+        [SerializeField]
+        private Transform _rightTransform;
 
         //public UnityEngine.UI.Text debugText;
 
@@ -40,28 +43,49 @@ namespace Aurora
             Vector3 clavicleLeftJoint = GetPointPos(kinectManager, userId, KinectInterop.JointType.ClavicleLeft);
             Vector3 clavicleRightJoint = GetPointPos(kinectManager, userId, KinectInterop.JointType.ClavicleRight);
 
-            float leftArmLength = CalculateArmLength(kinectManager, userId, KinectInterop.JointType.ClavicleLeft);
-            float rightArmLength = CalculateArmLength(kinectManager, userId, KinectInterop.JointType.ClavicleRight);
+            float leftClavicleLength = CalculateClavicleLength(kinectManager, userId, KinectInterop.JointType.ClavicleLeft);
+            float rightClavicleLength = CalculateClavicleLength(kinectManager, userId, KinectInterop.JointType.ClavicleRight);
+            float leftArmLength = CalculateArmLength(kinectManager, userId, KinectInterop.JointType.ShoulderLeft);
+            float rightArmLength = CalculateArmLength(kinectManager, userId, KinectInterop.JointType.ShoulderRight);
 
-            var leftShoulderMaxPos = clavicleLeftJoint + (new Vector3(1.0f, 0.0f, 0.0f) * leftArmLength);
+            var leftShoulderMaxPos = clavicleLeftJoint + (new Vector3(1.0f, 0.0f, 0.0f) * (leftClavicleLength + leftArmLength));
 
             Debug.DrawLine(clavicleLeftJoint, leftShoulderMaxPos, Color.red);
 
-            var rightShoulderMaxPos = clavicleRightJoint + (new Vector3(-1.0f, 0.0f, 0.0f) * rightArmLength);
+            var rightShoulderMaxPos = clavicleRightJoint + (new Vector3(-1.0f, 0.0f, 0.0f) * (rightClavicleLength + rightArmLength));
 
             Debug.DrawLine(clavicleLeftJoint, rightShoulderMaxPos, Color.green);
+
+            Vector3 shoulderLeftJoint = GetPointPos(kinectManager, userId, KinectInterop.JointType.ShoulderLeft);
+            //Debug.DrawLine(shoulderLeftJoint, shoulderLeftJoint + new Vector3(0.0f, -1.0f, 0.0f) * leftArmLength, Color.blue);
+            Debug.DrawLine(shoulderLeftJoint, shoulderLeftJoint + new Vector3(0.0f, 0.0f, 1.0f) * leftArmLength, Color.blue);
+
+            var boxLocation = new Vector3(-3, 2, 5);
+            var minBox = boxLocation + new Vector3(-(rightClavicleLength + rightArmLength), rightArmLength, -rightArmLength);
+            var maxBox = boxLocation + new Vector3(leftClavicleLength + leftArmLength, -leftArmLength, 0.0f);
+
+            DrawBoundingBox(minBox, maxBox, Color.yellow);
+
+            _rightTransform.position = boxLocation + (GetPointPos(kinectManager, userId, KinectInterop.JointType.HandRight) - clavicleRightJoint);
+            _leftTransform.position = boxLocation + (GetPointPos(kinectManager, userId, KinectInterop.JointType.HandLeft) - clavicleLeftJoint);
         }
 
-        private float CalculateArmLength(KinectManager kinectManager, ulong userId, KinectInterop.JointType clavicleJointIndex)
+        private float CalculateClavicleLength(KinectManager kinectManager, ulong userId, KinectInterop.JointType clavicleJointIndex)
         {
             var clavicleJoint = GetPointPos(kinectManager, userId, clavicleJointIndex);
             var shoulderJoint = GetPointPos(kinectManager, userId, clavicleJointIndex + 1);
-            var elbowJoint = GetPointPos(kinectManager, userId, clavicleJointIndex + 2);
-            var wristJoint = GetPointPos(kinectManager, userId, clavicleJointIndex + 3);
-            var handJoint = GetPointPos(kinectManager, userId, clavicleJointIndex + 4);
 
-            var totalDistance = Vector3.Distance(clavicleJoint, shoulderJoint)
-                                + Vector3.Distance(shoulderJoint, elbowJoint)
+            return Vector3.Distance(clavicleJoint, shoulderJoint);
+        }
+
+        private float CalculateArmLength(KinectManager kinectManager, ulong userId, KinectInterop.JointType shoulderJoingIndex)
+        {
+            var shoulderJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex);
+            var elbowJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex + 1);
+            var wristJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex + 2);
+            var handJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex + 3);
+
+            var totalDistance = Vector3.Distance(shoulderJoint, elbowJoint)
                                 + Vector3.Distance(elbowJoint, wristJoint)
                                 + Vector3.Distance(wristJoint, handJoint);
 
@@ -79,7 +103,36 @@ namespace Aurora
             }
 
             return scaledPos;
+        }
 
+        private void DrawBoundingBox(Vector3 minCorner, Vector3 maxCorner, Color color)
+        {
+            Vector3[] corners = new Vector3[8];
+
+            // Calculate the eight corners of the bounding box
+            corners[0] = new Vector3(minCorner.x, minCorner.y, minCorner.z);
+            corners[1] = new Vector3(minCorner.x, minCorner.y, maxCorner.z);
+            corners[2] = new Vector3(maxCorner.x, minCorner.y, maxCorner.z);
+            corners[3] = new Vector3(maxCorner.x, minCorner.y, minCorner.z);
+            corners[4] = new Vector3(minCorner.x, maxCorner.y, minCorner.z);
+            corners[5] = new Vector3(minCorner.x, maxCorner.y, maxCorner.z);
+            corners[6] = new Vector3(maxCorner.x, maxCorner.y, maxCorner.z);
+            corners[7] = new Vector3(maxCorner.x, maxCorner.y, minCorner.z);
+
+            // Draw lines between the corners to create the bounding box
+            for (int i = 0; i < 4; i++)
+            {
+                int nextIndex = (i + 1) % 4;
+                Debug.DrawLine(corners[i], corners[nextIndex], color);
+                Debug.DrawLine(corners[i + 4], corners[nextIndex + 4], color);
+                Debug.DrawLine(corners[i], corners[i + 4], color);
+            }
+
+            // Connect the top and bottom corners
+            for (int i = 0; i < 4; i++)
+            {
+                Debug.DrawLine(corners[i], corners[i + 4], color);
+            }
         }
 
         void Start()
