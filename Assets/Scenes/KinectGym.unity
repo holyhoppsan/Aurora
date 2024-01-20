@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8940892}
   - component: {fileID: 8940893}
-  - component: {fileID: 8940894}
   m_Layer: 0
   m_Name: HandController
   m_TagString: Untagged
@@ -174,24 +173,6 @@ MonoBehaviour:
   playerIndex: 0
   _leftTransform: {fileID: 0}
   _rightTransform: {fileID: 0}
---- !u!114 &8940894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8940891}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45099d624c1e6c14e9514f4e5ea1ed9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spoutName: Spout Sender
-  _keepAlpha: 0
-  _captureMethod: 0
-  _sourceCamera: {fileID: 0}
-  _sourceTexture: {fileID: 0}
-  _resources: {fileID: 11400000, guid: f449ebbe2051c2e4d993eaa773a410de, type: 2}
 --- !u!1 &408103920
 GameObject:
   m_ObjectHideFlags: 0
