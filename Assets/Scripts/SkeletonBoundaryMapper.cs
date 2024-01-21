@@ -5,8 +5,10 @@ namespace Aurora
 {
     public class SkeletonBoundaryMapper : MonoBehaviour
     {
-        [Tooltip("Index of the player, tracked by this component. 0 means the 1st player, 1 - the 2nd one, 2 - the 3rd one, etc.")]
-        public int playerIndex = 0;
+        [SerializeField]
+        public bool _debugSkeletonEnabled = false;
+
+        #region DebugSkeletonMemberVariables 
 
         [Tooltip("Game object used to represent the body joints.")]
         public GameObject jointPrefab;
@@ -14,6 +16,13 @@ namespace Aurora
         [Tooltip("Line object used to represent the bones between joints.")]
         //public LineRenderer linePrefab;
         public GameObject linePrefab;
+
+        private GameObject[] joints = null;
+        private GameObject[] lines = null;
+        #endregion
+
+        [Tooltip("Index of the player, tracked by this component. 0 means the 1st player, 1 - the 2nd one, 2 - the 3rd one, etc.")]
+        public int playerIndex = 0;
 
         [Tooltip("Scene object that will be used to represent the sensor's position and rotation in the scene.")]
         public Transform sensorTransform;
@@ -27,13 +36,20 @@ namespace Aurora
         [SerializeField]
         private Transform _rightTransform;
 
-        //public UnityEngine.UI.Text debugText;
+        [SerializeField]
+        private Transform _leftCameraWorldTransform;
 
-        private GameObject[] joints = null;
-        //private LineRenderer[] lines = null;
-        private GameObject[] lines = null;
+        [SerializeField]
+        private Transform _rightCameraWorldTransform;
 
-        //private Quaternion initialRotation = Quaternion.identity;
+        [SerializeField]
+        private Camera _mainCamera;
+
+        [SerializeField]
+        private float _configurableFarPlane;
+
+        [SerializeField]
+        private float _configurableNearPlane;
 
         private void CalculateHandMovementBox()
         {
@@ -57,17 +73,24 @@ namespace Aurora
             Debug.DrawLine(clavicleLeftJoint, rightShoulderMaxPos, Color.green);
 
             Vector3 shoulderLeftJoint = GetPointPos(kinectManager, userId, KinectInterop.JointType.ShoulderLeft);
-            //Debug.DrawLine(shoulderLeftJoint, shoulderLeftJoint + new Vector3(0.0f, -1.0f, 0.0f) * leftArmLength, Color.blue);
+            Debug.DrawLine(shoulderLeftJoint, shoulderLeftJoint + new Vector3(0.0f, 1.0f, 0.0f) * leftArmLength, Color.black);
             Debug.DrawLine(shoulderLeftJoint, shoulderLeftJoint + new Vector3(0.0f, 0.0f, 1.0f) * leftArmLength, Color.blue);
 
-            var boxLocation = new Vector3(-3, 2, 5);
-            var minBox = boxLocation + new Vector3(-(rightClavicleLength + rightArmLength), rightArmLength, -rightArmLength);
-            var maxBox = boxLocation + new Vector3(leftClavicleLength + leftArmLength, -leftArmLength, 0.0f);
+            var xHalf = (rightClavicleLength + rightArmLength + leftClavicleLength + leftArmLength) / 2.0f;
+            var yHalf = (leftArmLength + rightArmLength) / 2.0f;
+            var zHalf = (leftArmLength + rightArmLength) / 2.0f;
+
+            var boxLocation = new Vector3(0, 0, 0);
+            var minBox = new Vector3(-xHalf, -yHalf, 0.0f);
+            var maxBox = new Vector3(xHalf, yHalf, zHalf);
 
             DrawBoundingBox(minBox, maxBox, Color.yellow);
 
             _rightTransform.position = boxLocation + (GetPointPos(kinectManager, userId, KinectInterop.JointType.HandRight) - clavicleRightJoint);
             _leftTransform.position = boxLocation + (GetPointPos(kinectManager, userId, KinectInterop.JointType.HandLeft) - clavicleLeftJoint);
+
+            _rightCameraWorldTransform.position = MapPointToCameraFrustum(GetPointPos(kinectManager, userId, KinectInterop.JointType.HandRight), clavicleRightJoint, minBox, maxBox);
+            _leftCameraWorldTransform.position = MapPointToCameraFrustum(GetPointPos(kinectManager, userId, KinectInterop.JointType.HandLeft), clavicleLeftJoint, minBox, maxBox);
         }
 
         private float CalculateClavicleLength(KinectManager kinectManager, ulong userId, KinectInterop.JointType clavicleJointIndex)
@@ -135,160 +158,204 @@ namespace Aurora
             }
         }
 
+        public Vector3 MapPointToCameraFrustum(Vector3 point, Vector3 boundingBoxOrigin, Vector3 minBox, Vector3 maxBox)
+        {
+            var relativeHandPosition = point - boundingBoxOrigin;
+
+            relativeHandPosition.z = -relativeHandPosition.z;
+
+            var normalizedPoint = new Vector3(
+                    (relativeHandPosition.x - minBox.x) / (maxBox.x - minBox.x),
+                    (relativeHandPosition.y - minBox.y) / (maxBox.y - minBox.y),
+                    relativeHandPosition.z / (maxBox.z - minBox.z));
+
+            normalizedPoint.x = Mathf.Clamp(normalizedPoint.x, 0.0f, 1.0f);
+            normalizedPoint.y = Mathf.Clamp(normalizedPoint.y, 0.0f, 1.0f);
+            normalizedPoint.z = Mathf.Clamp(normalizedPoint.z, 0.0f, 1.0f);
+
+            float depthRange = _configurableFarPlane - _configurableNearPlane;
+            normalizedPoint.z = _configurableNearPlane + normalizedPoint.z * depthRange;
+
+            // Convert viewport coordinates to world space
+            Vector3 worldPoint = _mainCamera.ViewportToWorldPoint(normalizedPoint);
+
+            return worldPoint;
+        }
+
+        void OnGUI()
+        {
+            GUI.Label(new Rect(10, 10, 300, 50), $"x; {_rightCameraWorldTransform.position.x} y; {_rightCameraWorldTransform.position.y} z; {_rightCameraWorldTransform.position.z}");
+        }
+
         void Start()
         {
             KinectManager kinectManager = KinectManager.Instance;
-
-            if (kinectManager && kinectManager.IsInitialized())
+            if (_debugSkeletonEnabled)
             {
-                int jointsCount = kinectManager.GetJointCount();
-
-                if (jointPrefab)
+                #region StartDebugSkeleton
+                if (kinectManager && kinectManager.IsInitialized())
                 {
-                    // array holding the skeleton joints
-                    joints = new GameObject[jointsCount];
+                    int jointsCount = kinectManager.GetJointCount();
 
-                    for (int i = 0; i < joints.Length; i++)
+                    if (jointPrefab)
                     {
-                        joints[i] = Instantiate(jointPrefab) as GameObject;
-                        joints[i].transform.parent = transform;
-                        joints[i].name = ((KinectInterop.JointType)i).ToString();
-                        joints[i].SetActive(false);
-                    }
-                }
+                        joints = new GameObject[jointsCount];
 
-                // array holding the skeleton lines
-                //lines = new LineRenderer[jointsCount];
-                lines = new GameObject[jointsCount];
+                        for (int i = 0; i < joints.Length; i++)
+                        {
+                            joints[i] = Instantiate(jointPrefab) as GameObject;
+                            joints[i].transform.parent = transform;
+                            joints[i].name = ((KinectInterop.JointType)i).ToString();
+                            joints[i].SetActive(false);
+                        }
+                    }
+
+                    lines = new GameObject[jointsCount];
+                }
+                #endregion
+            }
+            else
+            {
+                DisableDebugSkeleton(kinectManager);
             }
 
-            // always mirrored
-            //initialRotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
         }
 
         void Update()
         {
             KinectManager kinectManager = KinectManager.Instance;
 
-            if (kinectManager && kinectManager.IsInitialized() && joints != null && lines != null)
+            if (kinectManager && kinectManager.IsInitialized())
             {
-                // overlay all joints in the skeleton
-                if (kinectManager.IsUserDetected(playerIndex))
+                if (_debugSkeletonEnabled)
                 {
-                    ulong userId = kinectManager.GetUserIdByIndex(playerIndex);
-                    int jointsCount = kinectManager.GetJointCount();
-
-                    for (int i = 0; i < jointsCount; i++)
+                    if (joints != null && lines != null)
                     {
-                        int joint = i;
-
-                        if (kinectManager.IsJointTracked(userId, joint))
+                        #region UpdateDebugSkeleton
+                        // overlay all joints in the skeleton
+                        if (kinectManager.IsUserDetected(playerIndex))
                         {
-                            Vector3 posJoint = !sensorTransform ? kinectManager.GetJointPosition(userId, joint) : kinectManager.GetJointKinectPosition(userId, joint, true);
-                            posJoint = new Vector3(posJoint.x * scaleFactors.x, posJoint.y * scaleFactors.y, posJoint.z * scaleFactors.z);
+                            ulong userId = kinectManager.GetUserIdByIndex(playerIndex);
+                            int jointsCount = kinectManager.GetJointCount();
 
-                            if (sensorTransform)
+                            for (int i = 0; i < jointsCount; i++)
                             {
-                                posJoint = sensorTransform.transform.TransformPoint(posJoint);
-                            }
+                                int joint = i;
 
-                            if (joints != null)
-                            {
-                                // overlay the joint
-                                if (posJoint != Vector3.zero)
+                                if (kinectManager.IsJointTracked(userId, joint))
                                 {
-                                    joints[i].SetActive(true);
-                                    joints[i].transform.position = posJoint;
-                                }
-                                else
-                                {
-                                    joints[i].SetActive(false);
-                                }
-                            }
-
-                            if (lines[i] == null && linePrefab != null)
-                            {
-                                lines[i] = Instantiate(linePrefab);  // as LineRenderer;
-                                lines[i].transform.parent = transform;
-                                lines[i].name = ((KinectInterop.JointType)i).ToString() + "_Line";
-                                lines[i].SetActive(false);
-                            }
-
-                            if (lines[i] != null)
-                            {
-                                // overlay the line to the parent joint
-                                int jointParent = (int)kinectManager.GetParentJoint((KinectInterop.JointType)joint);
-                                Vector3 posParent = Vector3.zero;
-
-                                if (kinectManager.IsJointTracked(userId, jointParent))
-                                {
-                                    posParent = !sensorTransform ? kinectManager.GetJointPosition(userId, jointParent) : kinectManager.GetJointKinectPosition(userId, jointParent, true);
+                                    Vector3 posJoint = !sensorTransform ? kinectManager.GetJointPosition(userId, joint) : kinectManager.GetJointKinectPosition(userId, joint, true);
                                     posJoint = new Vector3(posJoint.x * scaleFactors.x, posJoint.y * scaleFactors.y, posJoint.z * scaleFactors.z);
 
                                     if (sensorTransform)
                                     {
-                                        posParent = sensorTransform.transform.TransformPoint(posParent);
+                                        posJoint = sensorTransform.transform.TransformPoint(posJoint);
                                     }
-                                }
 
-                                if (posJoint != Vector3.zero && posParent != Vector3.zero)
-                                {
-                                    lines[i].SetActive(true);
+                                    if (joints != null)
+                                    {
+                                        // overlay the joint
+                                        if (posJoint != Vector3.zero)
+                                        {
+                                            joints[i].SetActive(true);
+                                            joints[i].transform.position = posJoint;
+                                        }
+                                        else
+                                        {
+                                            joints[i].SetActive(false);
+                                        }
+                                    }
 
-                                    Vector3 dirFromParent = posJoint - posParent;
+                                    if (lines[i] == null && linePrefab != null)
+                                    {
+                                        lines[i] = Instantiate(linePrefab);  // as LineRenderer;
+                                        lines[i].transform.parent = transform;
+                                        lines[i].name = ((KinectInterop.JointType)i).ToString() + "_Line";
+                                        lines[i].SetActive(false);
+                                    }
 
-                                    lines[i].transform.position = posParent + dirFromParent / 2f;
-                                    lines[i].transform.up = transform.rotation * dirFromParent.normalized;
+                                    if (lines[i] != null)
+                                    {
+                                        // overlay the line to the parent joint
+                                        int jointParent = (int)kinectManager.GetParentJoint((KinectInterop.JointType)joint);
+                                        Vector3 posParent = Vector3.zero;
 
-                                    Vector3 lineScale = lines[i].transform.localScale;
-                                    lines[i].transform.localScale = new Vector3(lineScale.x, dirFromParent.magnitude / 2f, lineScale.z);
+                                        if (kinectManager.IsJointTracked(userId, jointParent))
+                                        {
+                                            posParent = !sensorTransform ? kinectManager.GetJointPosition(userId, jointParent) : kinectManager.GetJointKinectPosition(userId, jointParent, true);
+                                            posJoint = new Vector3(posJoint.x * scaleFactors.x, posJoint.y * scaleFactors.y, posJoint.z * scaleFactors.z);
+
+                                            if (sensorTransform)
+                                            {
+                                                posParent = sensorTransform.transform.TransformPoint(posParent);
+                                            }
+                                        }
+
+                                        if (posJoint != Vector3.zero && posParent != Vector3.zero)
+                                        {
+                                            lines[i].SetActive(true);
+
+                                            Vector3 dirFromParent = posJoint - posParent;
+
+                                            lines[i].transform.position = posParent + dirFromParent / 2f;
+                                            lines[i].transform.up = transform.rotation * dirFromParent.normalized;
+
+                                            Vector3 lineScale = lines[i].transform.localScale;
+                                            lines[i].transform.localScale = new Vector3(lineScale.x, dirFromParent.magnitude / 2f, lineScale.z);
+                                        }
+                                        else
+                                        {
+                                            lines[i].SetActive(false);
+                                        }
+                                    }
+
                                 }
                                 else
                                 {
-                                    lines[i].SetActive(false);
+                                    if (joints[i] != null)
+                                    {
+                                        joints[i].SetActive(false);
+                                    }
+
+                                    if (lines[i] != null)
+                                    {
+                                        lines[i].SetActive(false);
+                                    }
                                 }
                             }
-
                         }
-                        else
-                        {
-                            if (joints[i] != null)
-                            {
-                                joints[i].SetActive(false);
-                            }
-
-                            if (lines[i] != null)
-                            {
-                                lines[i].SetActive(false);
-                            }
-                        }
+                        #endregion
                     }
-
-                    CalculateHandMovementBox();
-
-                }
-                else
-                {
-                    // user not detected - hide joints and lines
-                    int jointsCount = kinectManager.GetJointCount();
-
-                    for (int i = 0; i < jointsCount; i++)
+                    else
                     {
-                        if (joints[i] != null && joints[i].activeSelf)
-                        {
-                            joints[i].SetActive(false);
-                        }
-
-                        if (lines[i] != null && lines[i].activeSelf)
-                        {
-                            lines[i].SetActive(false);
-                        }
+                        DisableDebugSkeleton(kinectManager);
                     }
                 }
 
+                if (kinectManager.IsUserDetected(playerIndex))
+                {
+                    CalculateHandMovementBox();
+                }
             }
         }
 
+        private void DisableDebugSkeleton(KinectManager kinectManager)
+        {
+            int jointsCount = kinectManager.GetJointCount();
+
+            for (int i = 0; i < jointsCount; i++)
+            {
+                if (joints[i] != null && joints[i].activeSelf)
+                {
+                    joints[i].SetActive(false);
+                }
+
+                if (lines[i] != null && lines[i].activeSelf)
+                {
+                    lines[i].SetActive(false);
+                }
+            }
+        }
     }
 }
 
