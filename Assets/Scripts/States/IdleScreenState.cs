@@ -1,6 +1,7 @@
 using FSM;
 using UnityEngine;
 using UnityEngine.Video;
+using UnityEngine.Playables;
 
 public class IdleScreenState : FSMState
 {
@@ -10,6 +11,8 @@ public class IdleScreenState : FSMState
     [SerializeField]
     private GameObject _videoImage;
 
+    [SerializeField]
+    private PlayableDirector _director;
 
     public override void Enter()
     {
@@ -21,7 +24,7 @@ public class IdleScreenState : FSMState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _fsm.Transition<MainScreenState>();
+            _director.Play();
         }
     }
 
@@ -30,8 +33,8 @@ public class IdleScreenState : FSMState
         _videoImage.SetActive(false);
     }
 
-    public void OnMainMenuAnimationComplete()
+    public void OnIdleFadeComplete()
     {
-        //TODO: add screen fade
+        _fsm.Transition<MainScreenState>();
     }
 }
