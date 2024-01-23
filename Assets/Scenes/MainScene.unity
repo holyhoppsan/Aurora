@@ -548,7 +548,7 @@ MonoBehaviour:
   m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
-    m_Style: 1
+    m_Style: 0
     m_Time: 2
     m_CustomCurve:
       serializedVersion: 2
@@ -1413,6 +1413,7 @@ Transform:
   - {fileID: 2085849320}
   - {fileID: 1048152717}
   - {fileID: 574003683}
+  - {fileID: 1727181954}
   - {fileID: 888862473}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1434,6 +1435,7 @@ MonoBehaviour:
   - {fileID: 2085849321}
   - {fileID: 1048152718}
   - {fileID: 574003682}
+  - {fileID: 1727181955}
   - {fileID: 888862474}
 --- !u!1 &574003680
 GameObject:
@@ -2167,6 +2169,7 @@ Transform:
   - {fileID: 2004416832}
   - {fileID: 790061136}
   - {fileID: 554714737}
+  - {fileID: 1589046492}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1029471664
@@ -3287,6 +3290,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1465574762}
+  - component: {fileID: 1465574763}
   m_Layer: 0
   m_Name: Cameras
   m_TagString: Untagged
@@ -3314,6 +3318,18 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1465574763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465574761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0740bfc472c2a4f559335afddb0301d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1554886104
 GameObject:
   m_ObjectHideFlags: 3
@@ -3415,6 +3431,61 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 157221294405126278}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1589046491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1589046492}
+  - component: {fileID: 1589046493}
+  m_Layer: 0
+  m_Name: HeroBoost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1589046492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589046491}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1012324486}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &1589046493
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589046491}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 1c9c744e213e941f19d4891a86b32a9a, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -1573051832843578177, guid: 1c9c744e213e941f19d4891a86b32a9a, type: 2}
+    value: {fileID: 330585548}
+  - key: {fileID: -3992764904723573199, guid: 1c9c744e213e941f19d4891a86b32a9a, type: 2}
+    value: {fileID: 0}
+  m_ExposedReferences:
+    m_References:
+    - fd9f8919ed6c947d58c440f79b193e02: {fileID: 1348253930}
+    - f605f0223765447db9b4dad25c94eb80: {fileID: 1350232122}
 --- !u!1 &1625604424
 GameObject:
   m_ObjectHideFlags: 0
@@ -3536,6 +3607,83 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16599a85edc5d4b5895531a4ff8f66af, type: 3}
+--- !u!1 &1727181953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1727181954}
+  - component: {fileID: 1727181955}
+  - component: {fileID: 1727181956}
+  m_Layer: 0
+  m_Name: HeroBoostState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1727181954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727181953}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 560659364}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1727181955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727181953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbd5104a898ab4d748eea3860744e6c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _director: {fileID: 1589046493}
+  _cameraController: {fileID: 1465574763}
+--- !u!114 &1727181956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727181953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 649cd23db6a864077af3c9c260e8f6e7, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1727181955}
+          m_TargetAssemblyTypeName: HeroBoostState, Assembly-CSharp
+          m_MethodName: OnHeroBoostToAuroraSummonAnimationComplete
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!4 &1791192645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1269014037194680838, guid: cf127b7a9927547029f5d397eb343b12,

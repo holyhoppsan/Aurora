@@ -23,6 +23,6 @@ public class HeroScreenState : FSMState
 
     public void OnHeroScreenComplete()
     {
-        _fsm.Transition<AuroraScreenState>();
+        _fsm.Transition<HeroBoostState>();
     }
 }
