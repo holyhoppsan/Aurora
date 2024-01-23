@@ -2,7 +2,7 @@ using FSM;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class AuroraSummonState : FSMState
+public class AuroraInteractionState : FSMState
 {
     [SerializeField]
     private PlayableDirector _director;
@@ -10,17 +10,18 @@ public class AuroraSummonState : FSMState
     [SerializeField]
     private CameraController _cameraController;
 
+    [SerializeField]
+    private GameObject _auroras;
+
     public override void Enter()
     {
         _cameraController.SwitchCamera("AuroraView");
+        _auroras.SetActive(true);
     }
 
     public override void Tick()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _fsm.Transition<AuroraInteractionState>();
-        }
+
     }
 
     public override void Exit()
@@ -28,8 +29,8 @@ public class AuroraSummonState : FSMState
 
     }
 
-    public void OnAuroraSummonComplete()
+    public void OnAuroraInteractionComplete()
     {
-
+        _fsm.Transition<AuroraScreenState>();
     }
 }
