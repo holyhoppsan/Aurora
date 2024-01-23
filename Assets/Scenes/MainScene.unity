@@ -934,7 +934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &369897710
 Transform:
   m_ObjectHideFlags: 0
@@ -1377,7 +1377,7 @@ PlayableDirector:
     value: {fileID: 1283167507}
   m_ExposedReferences:
     m_References:
-    - 736f68be92f3748b69e6c3e55658f9fe: {fileID: 402203620}
+    - 736f68be92f3748b69e6c3e55658f9fe: {fileID: 1348253930}
     - c1ebcbbd4fc8d46d892fbc46a8a82ed4: {fileID: 1350232122}
     - ecb93a4f378ea410b9706773a1a6c0a9: {fileID: 1348253930}
 --- !u!1 &560659363
@@ -1498,6 +1498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _director: {fileID: 554714738}
+  _cameraController: {fileID: 1465574763}
 --- !u!4 &574003683
 Transform:
   m_ObjectHideFlags: 0
@@ -2980,7 +2981,7 @@ Transform:
   m_GameObject: {fileID: 1348253929}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.4, y: 10.8, z: 11}
+  m_LocalPosition: {x: -0.4, y: 10.9, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3473,7 +3474,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 1c9c744e213e941f19d4891a86b32a9a, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -3481,7 +3482,7 @@ PlayableDirector:
   - key: {fileID: -1573051832843578177, guid: 1c9c744e213e941f19d4891a86b32a9a, type: 2}
     value: {fileID: 330585548}
   - key: {fileID: -3992764904723573199, guid: 1c9c744e213e941f19d4891a86b32a9a, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1727181956}
   m_ExposedReferences:
     m_References:
     - fd9f8919ed6c947d58c440f79b193e02: {fileID: 1348253930}
@@ -4369,6 +4370,7 @@ MonoBehaviour:
   _videoPlayer: {fileID: 363988674}
   _videoImage: {fileID: 539168070}
   _director: {fileID: 2004416833}
+  _cameraController: {fileID: 1465574763}
 --- !u!114 &2085849322
 MonoBehaviour:
   m_ObjectHideFlags: 0

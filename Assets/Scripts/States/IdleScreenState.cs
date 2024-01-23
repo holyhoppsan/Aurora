@@ -14,10 +14,14 @@ public class IdleScreenState : FSMState
     [SerializeField]
     private PlayableDirector _director;
 
+    [SerializeField]
+    private CameraController _cameraController;
+
     public override void Enter()
     {
         _videoImage.SetActive(true);
         _videoPlayer.Play();
+        _cameraController.SwitchCamera("FlowerZoomInView");
     }
 
     public override void Tick()

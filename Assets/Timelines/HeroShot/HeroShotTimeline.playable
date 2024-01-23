@@ -191,7 +191,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: FlowerView
+    m_DisplayName: FlowerZoomInView
   m_Markers:
     m_Objects: []
 --- !u!114 &11400000
