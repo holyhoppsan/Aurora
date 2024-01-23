@@ -15,23 +15,19 @@ public class AuroraAndFloraState : FSMState
 
     public override void Enter()
     {
+        _cameraController.SwitchCamera("FlowerZoomInView");
     }
 
     public override void Tick()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _director.Play();
+            _fsm.Transition<EndTransitionState>();
         }
     }
 
     public override void Exit()
     {
         _auroras.SetActive(false);
-    }
-
-    public void OnAuroraInteractionComplete()
-    {
-        _fsm.Transition<EndTransitionState>();
     }
 }
