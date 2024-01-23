@@ -1575,6 +1575,8 @@ MonoBehaviour:
   - {fileID: 1727181955}
   - {fileID: 682743685}
   - {fileID: 105618550}
+  - {fileID: 2032637891}
+  - {fileID: 1239326707}
   - {fileID: 888862474}
 --- !u!1 &574003680
 GameObject:
@@ -2357,6 +2359,7 @@ Transform:
   - {fileID: 554714737}
   - {fileID: 1589046492}
   - {fileID: 378118247}
+  - {fileID: 1786686715}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1029471664
@@ -2756,6 +2759,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1239326705}
+  - component: {fileID: 1239326707}
+  - component: {fileID: 1239326706}
   m_Layer: 0
   m_Name: EndTransitionState
   m_TagString: Untagged
@@ -2778,6 +2783,49 @@ Transform:
   m_Children: []
   m_Father: {fileID: 560659364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1239326706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239326704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 3edf2b6da098d4e858be7e00e2a5ee84, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1239326707}
+          m_TargetAssemblyTypeName: EndTransitionState, Assembly-CSharp
+          m_MethodName: OnEndTransitionComplete
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1239326707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239326704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60c1208c34494df29ba507ee30b78e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _director: {fileID: 1786686716}
 --- !u!1 &1243335629
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,6 +3950,61 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1 &1786686714
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1786686715}
+  - component: {fileID: 1786686716}
+  m_Layer: 0
+  m_Name: EndTransition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1786686715
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786686714}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1012324486}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!320 &1786686716
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1786686714}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: a75e10f3c89e6453189f13c76733eefb, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 2463569284133354401, guid: a75e10f3c89e6453189f13c76733eefb, type: 2}
+    value: {fileID: 1264272202}
+  - key: {fileID: 6453371346650234407, guid: a75e10f3c89e6453189f13c76733eefb, type: 2}
+    value: {fileID: 1239326706}
+  - key: {fileID: 1384133106558646827, guid: a75e10f3c89e6453189f13c76733eefb, type: 2}
+    value: {fileID: 1264272198}
+  m_ExposedReferences:
+    m_References: []
 --- !u!4 &1791192645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1269014037194680838, guid: cf127b7a9927547029f5d397eb343b12,

@@ -2,16 +2,10 @@ using FSM;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class AuroraAndFloraState : FSMState
+public class EndTransitionState : FSMState
 {
     [SerializeField]
     private PlayableDirector _director;
-
-    [SerializeField]
-    private CameraController _cameraController;
-
-    [SerializeField]
-    private GameObject _auroras;
 
     public override void Enter()
     {
@@ -27,11 +21,10 @@ public class AuroraAndFloraState : FSMState
 
     public override void Exit()
     {
-        _auroras.SetActive(false);
     }
 
-    public void OnAuroraInteractionComplete()
+    public void OnEndTransitionComplete()
     {
-        _fsm.Transition<EndTransitionState>();
+        _fsm.Transition<IdleScreenState>();
     }
 }
