@@ -15,6 +15,13 @@ public class AuroraInteractionState : FSMState
 
     public override void Enter()
     {
+        if (_director != null)
+        {
+            _director.Stop();
+            _director.time = 0;
+            _director.Evaluate();
+        }
+
         _cameraController.SwitchCamera("AuroraView");
         _auroras.SetActive(true);
     }

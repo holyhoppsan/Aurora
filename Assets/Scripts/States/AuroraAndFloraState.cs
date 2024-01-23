@@ -10,8 +10,6 @@ public class AuroraAndFloraState : FSMState
     [SerializeField]
     private CameraController _cameraController;
 
-    [SerializeField]
-    private GameObject _auroras;
 
     public override void Enter()
     {
@@ -28,6 +26,6 @@ public class AuroraAndFloraState : FSMState
 
     public override void Exit()
     {
-        _auroras.SetActive(false);
+
     }
 }

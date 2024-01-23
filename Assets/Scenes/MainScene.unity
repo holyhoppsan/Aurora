@@ -993,7 +993,7 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 0
   m_SkipOnDrop: 1
-  m_Looping: 0
+  m_Looping: 1
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
@@ -2050,6 +2050,8 @@ PlayableDirector:
     value: {fileID: 1362706683}
   - key: {fileID: -2943967509942890536, guid: f17d4e0d003d840e4aa65880a127b61c, type: 2}
     value: {fileID: 255552124}
+  - key: {fileID: 3325163102601288712, guid: f17d4e0d003d840e4aa65880a127b61c, type: 2}
+    value: {fileID: 1264272202}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &790061136
@@ -2826,6 +2828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _director: {fileID: 1786686716}
+  _auroras: {fileID: 369897709}
 --- !u!1 &1243335629
 GameObject:
   m_ObjectHideFlags: 0
@@ -2946,7 +2949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4597,7 +4600,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _director: {fileID: 378118248}
   _cameraController: {fileID: 1465574763}
-  _auroras: {fileID: 369897709}
 --- !u!4 &2032637892
 Transform:
   m_ObjectHideFlags: 0

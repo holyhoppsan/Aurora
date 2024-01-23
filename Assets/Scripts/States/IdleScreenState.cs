@@ -19,6 +19,13 @@ public class IdleScreenState : FSMState
 
     public override void Enter()
     {
+        if (_director != null)
+        {
+            _director.Stop();
+            _director.time = 0;
+            _director.Evaluate();
+        }
+
         _videoImage.SetActive(true);
         _videoPlayer.Play();
         _cameraController.SwitchCamera("FlowerZoomInView");

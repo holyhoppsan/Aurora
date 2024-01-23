@@ -15,16 +15,20 @@ public class MainScreenState : FSMState
 
     public override void Enter()
     {
+        if (_director != null)
+        {
+            _director.Stop();
+            _director.time = 0;
+            _director.Evaluate();
+            _director.Play();
+        }
+
         _background.SetActive(true);
         _logo.SetActive(true);
     }
 
     public override void Tick()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _director.Play();
-        }
     }
 
     public override void Exit()
