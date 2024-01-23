@@ -2,7 +2,7 @@ using FSM;
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class HeroBoostState : FSMState
+public class AuroraSummonState : FSMState
 {
     [SerializeField]
     private PlayableDirector _director;
@@ -12,15 +12,12 @@ public class HeroBoostState : FSMState
 
     public override void Enter()
     {
-        _cameraController.SwitchCamera("FlowerZoomInView");
+        _cameraController.SwitchCamera("AuroraView");
     }
 
     public override void Tick()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            _director.Play();
-        }
+
     }
 
     public override void Exit()
@@ -28,8 +25,8 @@ public class HeroBoostState : FSMState
 
     }
 
-    public void OnHeroBoostToAuroraSummonAnimationComplete()
+    public void OnAuroraSummonComplete()
     {
-        _fsm.Transition<AuroraSummonState>();
+        _fsm.Transition<HeroBoostState>();
     }
 }
