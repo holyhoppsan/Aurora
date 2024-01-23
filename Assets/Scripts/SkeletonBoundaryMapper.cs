@@ -1,5 +1,7 @@
 using UnityEngine;
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 using com.rfilkov.kinect;
+#endif
 
 namespace Aurora
 {
@@ -17,8 +19,8 @@ namespace Aurora
         //public LineRenderer linePrefab;
         public GameObject linePrefab;
 
-        private GameObject[] joints = null;
-        private GameObject[] lines = null;
+        private GameObject[] joints;
+        private GameObject[] lines;
         #endregion
 
         [Tooltip("Index of the player, tracked by this component. 0 means the 1st player, 1 - the 2nd one, 2 - the 3rd one, etc.")]
@@ -50,83 +52,6 @@ namespace Aurora
 
         [SerializeField]
         private float _configurableNearPlane;
-
-        private void CalculateHandMovementBox()
-        {
-            KinectManager kinectManager = KinectManager.Instance;
-
-            ulong userId = kinectManager.GetUserIdByIndex(playerIndex);
-            Vector3 clavicleLeftJoint = GetPointPos(kinectManager, userId, KinectInterop.JointType.ClavicleLeft);
-            Vector3 clavicleRightJoint = GetPointPos(kinectManager, userId, KinectInterop.JointType.ClavicleRight);
-
-            float leftClavicleLength = CalculateClavicleLength(kinectManager, userId, KinectInterop.JointType.ClavicleLeft);
-            float rightClavicleLength = CalculateClavicleLength(kinectManager, userId, KinectInterop.JointType.ClavicleRight);
-            float leftArmLength = CalculateArmLength(kinectManager, userId, KinectInterop.JointType.ShoulderLeft);
-            float rightArmLength = CalculateArmLength(kinectManager, userId, KinectInterop.JointType.ShoulderRight);
-
-            var leftShoulderMaxPos = clavicleLeftJoint + (new Vector3(1.0f, 0.0f, 0.0f) * (leftClavicleLength + leftArmLength));
-
-            Debug.DrawLine(clavicleLeftJoint, leftShoulderMaxPos, Color.red);
-
-            var rightShoulderMaxPos = clavicleRightJoint + (new Vector3(-1.0f, 0.0f, 0.0f) * (rightClavicleLength + rightArmLength));
-
-            Debug.DrawLine(clavicleLeftJoint, rightShoulderMaxPos, Color.green);
-
-            Vector3 shoulderLeftJoint = GetPointPos(kinectManager, userId, KinectInterop.JointType.ShoulderLeft);
-            Debug.DrawLine(shoulderLeftJoint, shoulderLeftJoint + new Vector3(0.0f, 1.0f, 0.0f) * leftArmLength, Color.black);
-            Debug.DrawLine(shoulderLeftJoint, shoulderLeftJoint + new Vector3(0.0f, 0.0f, 1.0f) * leftArmLength, Color.blue);
-
-            var xHalf = (rightClavicleLength + rightArmLength + leftClavicleLength + leftArmLength) / 2.0f;
-            var yHalf = (leftArmLength + rightArmLength) / 2.0f;
-            var zHalf = (leftArmLength + rightArmLength) / 2.0f;
-
-            var boxLocation = new Vector3(0, 0, 0);
-            var minBox = new Vector3(-xHalf, -yHalf, 0.0f);
-            var maxBox = new Vector3(xHalf, yHalf, zHalf);
-
-            DrawBoundingBox(minBox, maxBox, Color.yellow);
-
-            // _rightTransform.position = boxLocation + (GetPointPos(kinectManager, userId, KinectInterop.JointType.HandRight) - clavicleRightJoint);
-            // _leftTransform.position = boxLocation + (GetPointPos(kinectManager, userId, KinectInterop.JointType.HandLeft) - clavicleLeftJoint);
-
-            _rightCameraWorldTransform.position = MapPointToCameraFrustum(GetPointPos(kinectManager, userId, KinectInterop.JointType.HandRight), clavicleRightJoint, minBox, maxBox);
-            _leftCameraWorldTransform.position = MapPointToCameraFrustum(GetPointPos(kinectManager, userId, KinectInterop.JointType.HandLeft), clavicleLeftJoint, minBox, maxBox);
-        }
-
-        private float CalculateClavicleLength(KinectManager kinectManager, ulong userId, KinectInterop.JointType clavicleJointIndex)
-        {
-            var clavicleJoint = GetPointPos(kinectManager, userId, clavicleJointIndex);
-            var shoulderJoint = GetPointPos(kinectManager, userId, clavicleJointIndex + 1);
-
-            return Vector3.Distance(clavicleJoint, shoulderJoint);
-        }
-
-        private float CalculateArmLength(KinectManager kinectManager, ulong userId, KinectInterop.JointType shoulderJoingIndex)
-        {
-            var shoulderJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex);
-            var elbowJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex + 1);
-            var wristJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex + 2);
-            var handJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex + 3);
-
-            var totalDistance = Vector3.Distance(shoulderJoint, elbowJoint)
-                                + Vector3.Distance(elbowJoint, wristJoint)
-                                + Vector3.Distance(wristJoint, handJoint);
-
-            return totalDistance;
-        }
-
-        private Vector3 GetPointPos(KinectManager kinectManager, ulong userId, KinectInterop.JointType joint)
-        {
-            Vector3 jointPos = !sensorTransform ? kinectManager.GetJointPosition(userId, joint) : kinectManager.GetJointKinectPosition(userId, joint, true);
-            var scaledPos = new Vector3(jointPos.x * scaleFactors.x, jointPos.y * scaleFactors.y, jointPos.z * scaleFactors.z);
-
-            if (sensorTransform)
-            {
-                scaledPos = sensorTransform.transform.TransformPoint(scaledPos);
-            }
-
-            return scaledPos;
-        }
 
         private void DrawBoundingBox(Vector3 minCorner, Vector3 maxCorner, Color color)
         {
@@ -189,6 +114,7 @@ namespace Aurora
 
         void Start()
         {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             KinectManager kinectManager = KinectManager.Instance;
             if (_debugSkeletonEnabled)
             {
@@ -218,11 +144,12 @@ namespace Aurora
             {
                 DisableDebugSkeleton(kinectManager);
             }
-
+#endif
         }
 
         void Update()
         {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
             KinectManager kinectManager = KinectManager.Instance;
 
             if (kinectManager && kinectManager.IsInitialized())
@@ -337,8 +264,10 @@ namespace Aurora
                     CalculateHandMovementBox();
                 }
             }
+#endif
         }
 
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
         private void DisableDebugSkeleton(KinectManager kinectManager)
         {
             int jointsCount = kinectManager.GetJointCount();
@@ -356,6 +285,84 @@ namespace Aurora
                 }
             }
         }
+
+        private void CalculateHandMovementBox()
+        {
+            KinectManager kinectManager = KinectManager.Instance;
+
+            ulong userId = kinectManager.GetUserIdByIndex(playerIndex);
+            Vector3 clavicleLeftJoint = GetPointPos(kinectManager, userId, KinectInterop.JointType.ClavicleLeft);
+            Vector3 clavicleRightJoint = GetPointPos(kinectManager, userId, KinectInterop.JointType.ClavicleRight);
+
+            float leftClavicleLength = CalculateClavicleLength(kinectManager, userId, KinectInterop.JointType.ClavicleLeft);
+            float rightClavicleLength = CalculateClavicleLength(kinectManager, userId, KinectInterop.JointType.ClavicleRight);
+            float leftArmLength = CalculateArmLength(kinectManager, userId, KinectInterop.JointType.ShoulderLeft);
+            float rightArmLength = CalculateArmLength(kinectManager, userId, KinectInterop.JointType.ShoulderRight);
+
+            var leftShoulderMaxPos = clavicleLeftJoint + (new Vector3(1.0f, 0.0f, 0.0f) * (leftClavicleLength + leftArmLength));
+
+            Debug.DrawLine(clavicleLeftJoint, leftShoulderMaxPos, Color.red);
+
+            var rightShoulderMaxPos = clavicleRightJoint + (new Vector3(-1.0f, 0.0f, 0.0f) * (rightClavicleLength + rightArmLength));
+
+            Debug.DrawLine(clavicleLeftJoint, rightShoulderMaxPos, Color.green);
+
+            Vector3 shoulderLeftJoint = GetPointPos(kinectManager, userId, KinectInterop.JointType.ShoulderLeft);
+            Debug.DrawLine(shoulderLeftJoint, shoulderLeftJoint + new Vector3(0.0f, 1.0f, 0.0f) * leftArmLength, Color.black);
+            Debug.DrawLine(shoulderLeftJoint, shoulderLeftJoint + new Vector3(0.0f, 0.0f, 1.0f) * leftArmLength, Color.blue);
+
+            var xHalf = (rightClavicleLength + rightArmLength + leftClavicleLength + leftArmLength) / 2.0f;
+            var yHalf = (leftArmLength + rightArmLength) / 2.0f;
+            var zHalf = (leftArmLength + rightArmLength) / 2.0f;
+
+            var boxLocation = new Vector3(0, 0, 0);
+            var minBox = new Vector3(-xHalf, -yHalf, 0.0f);
+            var maxBox = new Vector3(xHalf, yHalf, zHalf);
+
+            DrawBoundingBox(minBox, maxBox, Color.yellow);
+
+            // _rightTransform.position = boxLocation + (GetPointPos(kinectManager, userId, KinectInterop.JointType.HandRight) - clavicleRightJoint);
+            // _leftTransform.position = boxLocation + (GetPointPos(kinectManager, userId, KinectInterop.JointType.HandLeft) - clavicleLeftJoint);
+
+            _rightCameraWorldTransform.position = MapPointToCameraFrustum(GetPointPos(kinectManager, userId, KinectInterop.JointType.HandRight), clavicleRightJoint, minBox, maxBox);
+            _leftCameraWorldTransform.position = MapPointToCameraFrustum(GetPointPos(kinectManager, userId, KinectInterop.JointType.HandLeft), clavicleLeftJoint, minBox, maxBox);
+        }
+
+        private float CalculateClavicleLength(KinectManager kinectManager, ulong userId, KinectInterop.JointType clavicleJointIndex)
+        {
+            var clavicleJoint = GetPointPos(kinectManager, userId, clavicleJointIndex);
+            var shoulderJoint = GetPointPos(kinectManager, userId, clavicleJointIndex + 1);
+
+            return Vector3.Distance(clavicleJoint, shoulderJoint);
+        }
+
+        private float CalculateArmLength(KinectManager kinectManager, ulong userId, KinectInterop.JointType shoulderJoingIndex)
+        {
+            var shoulderJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex);
+            var elbowJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex + 1);
+            var wristJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex + 2);
+            var handJoint = GetPointPos(kinectManager, userId, shoulderJoingIndex + 3);
+
+            var totalDistance = Vector3.Distance(shoulderJoint, elbowJoint)
+                                + Vector3.Distance(elbowJoint, wristJoint)
+                                + Vector3.Distance(wristJoint, handJoint);
+
+            return totalDistance;
+        }
+
+        private Vector3 GetPointPos(KinectManager kinectManager, ulong userId, KinectInterop.JointType joint)
+        {
+            Vector3 jointPos = !sensorTransform ? kinectManager.GetJointPosition(userId, joint) : kinectManager.GetJointKinectPosition(userId, joint, true);
+            var scaledPos = new Vector3(jointPos.x * scaleFactors.x, jointPos.y * scaleFactors.y, jointPos.z * scaleFactors.z);
+
+            if (sensorTransform)
+            {
+                scaledPos = sensorTransform.transform.TransformPoint(scaledPos);
+            }
+
+            return scaledPos;
+        }
+#endif
     }
 }
 

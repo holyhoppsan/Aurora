@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 using com.rfilkov.kinect;
+#endif
+
 using System.Net.WebSockets;
 
 public class HandController : MonoBehaviour

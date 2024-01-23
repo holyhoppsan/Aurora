@@ -1,12 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 using com.rfilkov.kinect;
+#endif
+
 using UnityEngine;
 
 public class PlayerRenderer : MonoBehaviour
 {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
     [SerializeField]
     private KinectManager _kinectManager;
+#endif
 
     [SerializeField]
     private Material _playerMaterial;
@@ -18,6 +21,7 @@ public class PlayerRenderer : MonoBehaviour
 
     void Update()
     {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
         var texture = _kinectManager.GetUsersImageTex(0);
 
         if(texture)
@@ -26,5 +30,6 @@ public class PlayerRenderer : MonoBehaviour
             var renderer = GetComponent<Renderer>();
             renderer.material = _playerMaterial;
         }
+#endif
     }
 }
