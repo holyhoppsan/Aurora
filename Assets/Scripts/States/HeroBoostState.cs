@@ -12,7 +12,10 @@ public class HeroBoostState : FSMState
     private CameraController _cameraController;
 
     [SerializeField]
-    private Camera _mainCamera;
+    private BoxCollider _flowerCollider;
+
+    [SerializeField]
+    private InputManager _inputManager;
 
     [SerializeField]
     private bool _debugRenderingEnabled;
@@ -57,7 +60,9 @@ public class HeroBoostState : FSMState
             _director.Play();
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) ||
+            PointInsideFlowerBox(_inputManager.LeftCursorScreenPosition) ||
+            PointInsideFlowerBox(_inputManager.RightCursorScreenPosition))
         {
             _currentEmissive += Time.deltaTime * _emissiveBoostSpeed;
             _currentEmissive = Mathf.Min(1.0f, _currentEmissive);
@@ -73,14 +78,6 @@ public class HeroBoostState : FSMState
         }
 
         _avenMaterial.SetFloat("_EmissiveIntensity", _currentEmissive);
-
-        if (_debugRenderingEnabled)
-        {
-            if (_mainCamera != null)
-            {
-                DebugRendering.RenderScreenSpaceDebugLine(_mainCamera, new Vector2(10, 10), new Vector2(100, 10), Color.red);
-            }
-        }
     }
 
     public override void Exit()
@@ -91,5 +88,22 @@ public class HeroBoostState : FSMState
     public void OnHeroBoostToAuroraSummonAnimationComplete()
     {
         _fsm.Transition<AuroraSummonState>();
+    }
+
+    private bool PointInsideFlowerBox(Vector3 point)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(point);
+        RaycastHit hit;
+
+        Debug.DrawLine(ray.origin, ray.origin + ray.direction * 100.0f);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider == _flowerCollider)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

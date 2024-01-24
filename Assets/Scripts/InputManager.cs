@@ -11,6 +11,21 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     private bool _mouseInputEnabled = false;
 
+    public Vector2 LeftCursorScreenPosition
+    {
+        get
+        {
+            return Camera.main.WorldToScreenPoint(_leftCursor.transform.position);
+        }
+    }
+
+    public Vector2 RightCursorScreenPosition
+    {
+        get
+        {
+            return Camera.main.WorldToScreenPoint(_rightCursor.transform.position);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
