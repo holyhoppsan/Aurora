@@ -1,6 +1,7 @@
 using FSM;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
 
 public class HeroBoostState : FSMState
 {
@@ -9,6 +10,17 @@ public class HeroBoostState : FSMState
 
     [SerializeField]
     private CameraController _cameraController;
+
+    [SerializeField]
+    private Material _avenMaterial;
+
+    [SerializeField]
+    private float _emissiveBoostSpeed;
+
+    [SerializeField]
+    private float _emissiveBoostCooldown;
+
+    private float _currentEmissive;
 
     public override void Enter()
     {
@@ -20,6 +32,10 @@ public class HeroBoostState : FSMState
         }
 
         _cameraController.SwitchCamera("FlowerZoomInView");
+
+        _currentEmissive = 0.0f;
+
+        _avenMaterial.SetFloat("_EmissiveIntensity", _currentEmissive);
     }
 
     public override void Tick()
@@ -28,6 +44,23 @@ public class HeroBoostState : FSMState
         {
             _director.Play();
         }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            _currentEmissive += Time.deltaTime * _emissiveBoostSpeed;
+            _currentEmissive = Mathf.Min(1.0f, _currentEmissive);
+        }
+
+        if (_currentEmissive < 1.0f)
+        {
+            _currentEmissive = Mathf.Max(0.0f, _currentEmissive - (Time.deltaTime * _emissiveBoostCooldown));
+        }
+        else
+        {
+            _director.Play();
+        }
+
+        _avenMaterial.SetFloat("_EmissiveIntensity", _currentEmissive);
     }
 
     public override void Exit()

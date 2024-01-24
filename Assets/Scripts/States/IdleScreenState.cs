@@ -17,8 +17,13 @@ public class IdleScreenState : FSMState
     [SerializeField]
     private CameraController _cameraController;
 
+    [SerializeField]
+    private Material _avenMaterial;
+
     public override void Enter()
     {
+        SetupDefaultValues();
+
         if (_director != null)
         {
             _director.Stop();
@@ -47,5 +52,10 @@ public class IdleScreenState : FSMState
     public void OnIdleFadeComplete()
     {
         _fsm.Transition<MainScreenState>();
+    }
+
+    private void SetupDefaultValues()
+    {
+        _avenMaterial.SetFloat("_EmissiveIntensity", 0.0f);
     }
 }

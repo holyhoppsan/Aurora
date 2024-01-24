@@ -1012,7 +1012,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &369897710
 Transform:
   m_ObjectHideFlags: 0
@@ -3923,6 +3923,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _director: {fileID: 1589046493}
   _cameraController: {fileID: 1465574763}
+  _avenMaterial: {fileID: 2100000, guid: a8b15f44325364f1ea9f2dd1d7a8d6eb, type: 2}
+  _emissiveBoostSpeed: 0.2
+  _emissiveBoostCooldown: 0.01
 --- !u!114 &1727181956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4740,6 +4743,7 @@ MonoBehaviour:
   _videoImage: {fileID: 539168070}
   _director: {fileID: 2004416833}
   _cameraController: {fileID: 1465574763}
+  _avenMaterial: {fileID: 2100000, guid: a8b15f44325364f1ea9f2dd1d7a8d6eb, type: 2}
 --- !u!114 &2085849322
 MonoBehaviour:
   m_ObjectHideFlags: 0
