@@ -78,19 +78,9 @@ public class HeroBoostState : FSMState
         {
             if (_mainCamera != null)
             {
-                RenderScreenSpaceDebugLine(new Vector2(10,10), new Vector2(100,10));
+                DebugRendering.RenderScreenSpaceDebugLine(_mainCamera, new Vector2(10, 10), new Vector2(100, 10), Color.red);
             }
         }
-    }
-
-    private void RenderScreenSpaceDebugLine(Vector2 screenStartPoint, Vector2 screenEndPoint)
-    {
-        // Convert screen space coordinates to world space
-        Vector3 worldStartPoint = _mainCamera.ScreenToWorldPoint(new Vector3(screenStartPoint.x, screenStartPoint.y, _mainCamera.nearClipPlane));
-        Vector3 worldEndPoint = _mainCamera.ScreenToWorldPoint(new Vector3(screenEndPoint.x, screenEndPoint.y, _mainCamera.nearClipPlane));
-
-        // Draw the debug line in world space
-        Debug.DrawLine(worldStartPoint, worldEndPoint, Color.red);
     }
 
     public override void Exit()

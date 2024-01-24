@@ -53,35 +53,12 @@ namespace Aurora
         [SerializeField]
         private float _configurableNearPlane;
 
-        private void DrawBoundingBox(Vector3 minCorner, Vector3 maxCorner, Color color)
-        {
-            Vector3[] corners = new Vector3[8];
+        #region MouseInput
 
-            // Calculate the eight corners of the bounding box
-            corners[0] = new Vector3(minCorner.x, minCorner.y, minCorner.z);
-            corners[1] = new Vector3(minCorner.x, minCorner.y, maxCorner.z);
-            corners[2] = new Vector3(maxCorner.x, minCorner.y, maxCorner.z);
-            corners[3] = new Vector3(maxCorner.x, minCorner.y, minCorner.z);
-            corners[4] = new Vector3(minCorner.x, maxCorner.y, minCorner.z);
-            corners[5] = new Vector3(minCorner.x, maxCorner.y, maxCorner.z);
-            corners[6] = new Vector3(maxCorner.x, maxCorner.y, maxCorner.z);
-            corners[7] = new Vector3(maxCorner.x, maxCorner.y, minCorner.z);
 
-            // Draw lines between the corners to create the bounding box
-            for (int i = 0; i < 4; i++)
-            {
-                int nextIndex = (i + 1) % 4;
-                Debug.DrawLine(corners[i], corners[nextIndex], color);
-                Debug.DrawLine(corners[i + 4], corners[nextIndex + 4], color);
-                Debug.DrawLine(corners[i], corners[i + 4], color);
-            }
+        #endregion
 
-            // Connect the top and bottom corners
-            for (int i = 0; i < 4; i++)
-            {
-                Debug.DrawLine(corners[i], corners[i + 4], color);
-            }
-        }
+
 
         public Vector3 MapPointToCameraFrustum(Vector3 point, Vector3 boundingBoxOrigin, Vector3 minBox, Vector3 maxBox)
         {
@@ -319,7 +296,7 @@ namespace Aurora
             var minBox = new Vector3(-xHalf, -yHalf, 0.0f);
             var maxBox = new Vector3(xHalf, yHalf, zHalf);
 
-            DrawBoundingBox(minBox, maxBox, Color.yellow);
+            DebugRendering.DrawBoundingBox(minBox, maxBox, Color.yellow);
 
             // _rightTransform.position = boxLocation + (GetPointPos(kinectManager, userId, KinectInterop.JointType.HandRight) - clavicleRightJoint);
             // _leftTransform.position = boxLocation + (GetPointPos(kinectManager, userId, KinectInterop.JointType.HandLeft) - clavicleLeftJoint);
