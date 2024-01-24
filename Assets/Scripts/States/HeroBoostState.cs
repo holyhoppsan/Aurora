@@ -12,6 +12,12 @@ public class HeroBoostState : FSMState
     private CameraController _cameraController;
 
     [SerializeField]
+    private Camera _mainCamera;
+
+    [SerializeField]
+    private bool _debugRenderingEnabled;
+
+    [SerializeField]
     private Material _avenMaterial;
 
     [SerializeField]
@@ -19,6 +25,12 @@ public class HeroBoostState : FSMState
 
     [SerializeField]
     private float _emissiveBoostCooldown;
+
+    [SerializeField]
+    private Transform _leftHandTransform;
+
+    [SerializeField]
+    private Transform _rightHandTransform;
 
     private float _currentEmissive;
 
@@ -61,6 +73,24 @@ public class HeroBoostState : FSMState
         }
 
         _avenMaterial.SetFloat("_EmissiveIntensity", _currentEmissive);
+
+        if (_debugRenderingEnabled)
+        {
+            if (_mainCamera != null)
+            {
+                RenderScreenSpaceDebugLine(new Vector2(10,10), new Vector2(100,10));
+            }
+        }
+    }
+
+    private void RenderScreenSpaceDebugLine(Vector2 screenStartPoint, Vector2 screenEndPoint)
+    {
+        // Convert screen space coordinates to world space
+        Vector3 worldStartPoint = _mainCamera.ScreenToWorldPoint(new Vector3(screenStartPoint.x, screenStartPoint.y, _mainCamera.nearClipPlane));
+        Vector3 worldEndPoint = _mainCamera.ScreenToWorldPoint(new Vector3(screenEndPoint.x, screenEndPoint.y, _mainCamera.nearClipPlane));
+
+        // Draw the debug line in world space
+        Debug.DrawLine(worldStartPoint, worldEndPoint, Color.red);
     }
 
     public override void Exit()

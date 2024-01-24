@@ -11,7 +11,7 @@ public class CameraController : MonoBehaviour
             if (vcam != null)
             {
                 vcam.enabled = child.name == cameraName;
-            }
+            } 
         }
     }
 }
