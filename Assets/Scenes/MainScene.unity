@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.007203019, g: 0.0073885648, b: 0.007908998, a: 1}
+  m_IndirectSpecularColor: {r: 0.0072651245, g: 0.007373152, b: 0.007961164, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2829,6 +2829,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _director: {fileID: 1786686716}
   _auroras: {fileID: 369897709}
+--- !u!4 &1239523512 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3775798488229025561, guid: 16599a85edc5d4b5895531a4ff8f66af,
+    type: 3}
+  m_PrefabInstance: {fileID: 1676791502}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1243335629
 GameObject:
   m_ObjectHideFlags: 0
@@ -3804,17 +3810,17 @@ PrefabInstance:
     - target: {fileID: 3775798488229025561, guid: 16599a85edc5d4b5895531a4ff8f66af,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3775798488229025561, guid: 16599a85edc5d4b5895531a4ff8f66af,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3775798488229025561, guid: 16599a85edc5d4b5895531a4ff8f66af,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3775798488229025561, guid: 16599a85edc5d4b5895531a4ff8f66af,
         type: 3}
@@ -3923,9 +3929,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _director: {fileID: 1589046493}
   _cameraController: {fileID: 1465574763}
+  _mainCamera: {fileID: 330585545}
+  _debugRenderingEnabled: 1
   _avenMaterial: {fileID: 2100000, guid: a8b15f44325364f1ea9f2dd1d7a8d6eb, type: 2}
   _emissiveBoostSpeed: 0.2
   _emissiveBoostCooldown: 0.01
+  _leftHandTransform: {fileID: 2012325024}
+  _rightHandTransform: {fileID: 1239523512}
 --- !u!114 &1727181956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4572,6 +4582,12 @@ PlayableDirector:
     value: {fileID: 2085849322}
   m_ExposedReferences:
     m_References: []
+--- !u!4 &2012325024 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3775798488229025561, guid: 16599a85edc5d4b5895531a4ff8f66af,
+    type: 3}
+  m_PrefabInstance: {fileID: 6211505238058767409}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2032637889
 GameObject:
   m_ObjectHideFlags: 0
@@ -4973,17 +4989,17 @@ PrefabInstance:
     - target: {fileID: 3775798488229025561, guid: 16599a85edc5d4b5895531a4ff8f66af,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3775798488229025561, guid: 16599a85edc5d4b5895531a4ff8f66af,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3775798488229025561, guid: 16599a85edc5d4b5895531a4ff8f66af,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3775798488229025561, guid: 16599a85edc5d4b5895531a4ff8f66af,
         type: 3}

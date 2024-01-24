@@ -249,8 +249,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _debugSkeletonEnabled: 0
-  jointPrefab: {fileID: 0}
-  linePrefab: {fileID: 0}
+  jointPrefab: {fileID: 4646339965450479195, guid: d668dab134929cb448e9e076504611c1,
+    type: 3}
+  linePrefab: {fileID: 5178041537707598492, guid: fbbe94bc3efe66f40b8b7b9c28e6a1fc,
+    type: 3}
   playerIndex: 0
   sensorTransform: {fileID: 0}
   scaleFactors: {x: 1, y: 1, z: 1}
@@ -259,8 +261,8 @@ MonoBehaviour:
   _leftCameraWorldTransform: {fileID: 0}
   _rightCameraWorldTransform: {fileID: 0}
   _mainCamera: {fileID: 0}
-  _configurableFarPlane: 50
-  _configurableNearPlane: 10
+  _configurableFarPlane: 0.9
+  _configurableNearPlane: 0.1
 --- !u!1 &7019452147628907460
 GameObject:
   m_ObjectHideFlags: 0
