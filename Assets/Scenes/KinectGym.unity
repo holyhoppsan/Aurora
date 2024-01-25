@@ -349,6 +349,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: KinectController
       objectReference: {fileID: 0}
+    - target: {fileID: 7898222215527772804, guid: 395711b546b8d1946890a0b62eee94cb,
+        type: 3}
+      propertyPath: _mainCamera
+      value: 
+      objectReference: {fileID: 874601242}
+    - target: {fileID: 7898222215527772804, guid: 395711b546b8d1946890a0b62eee94cb,
+        type: 3}
+      propertyPath: _leftTransform
+      value: 
+      objectReference: {fileID: 1583702281}
+    - target: {fileID: 7898222215527772804, guid: 395711b546b8d1946890a0b62eee94cb,
+        type: 3}
+      propertyPath: _rightTransform
+      value: 
+      objectReference: {fileID: 1386344943}
+    - target: {fileID: 7898222215527772804, guid: 395711b546b8d1946890a0b62eee94cb,
+        type: 3}
+      propertyPath: sensorTransform
+      value: 
+      objectReference: {fileID: 874601243}
+    - target: {fileID: 7898222215527772804, guid: 395711b546b8d1946890a0b62eee94cb,
+        type: 3}
+      propertyPath: _debugSkeletonEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7898222215527772804, guid: 395711b546b8d1946890a0b62eee94cb,
+        type: 3}
+      propertyPath: _leftCameraWorldTransform
+      value: 
+      objectReference: {fileID: 1583702281}
+    - target: {fileID: 7898222215527772804, guid: 395711b546b8d1946890a0b62eee94cb,
+        type: 3}
+      propertyPath: _rightCameraWorldTransform
+      value: 
+      objectReference: {fileID: 1386344943}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -414,6 +449,7 @@ MonoBehaviour:
   _rightCameraWorldTransform: {fileID: 1348647502}
   _mainCamera: {fileID: 874601242}
   _configurableFarPlane: 2500
+  _configurableNearPlane: 0
 --- !u!1 &664830016
 GameObject:
   m_ObjectHideFlags: 0
