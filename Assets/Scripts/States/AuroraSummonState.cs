@@ -26,7 +26,7 @@ public class AuroraSummonState : FSMState
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _fsm.Transition<AuroraInteractionState>();
+            _director.Play();
         }
     }
 
@@ -37,6 +37,6 @@ public class AuroraSummonState : FSMState
 
     public void OnAuroraSummonComplete()
     {
-
+        _fsm.Transition<AuroraInteractionState>();
     }
 }
