@@ -1,30 +1,27 @@
 using FSM;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Video;
 
 public class MainScreenState : FSMState
 {
     [SerializeField]
-    private PlayableDirector _director;
+    private VideoPlayer _videoPlayer;
 
     [SerializeField]
-    private GameObject _background;
+    private GameObject _videoImage;
 
     [SerializeField]
-    private GameObject _logo;
+    private GameObject _fader;
 
     public override void Enter()
     {
-        if (_director != null)
-        {
-            _director.Stop();
-            _director.time = 0;
-            _director.Evaluate();
-            _director.Play();
-        }
+        _fader.SetActive(false);
 
-        _background.SetActive(true);
-        _logo.SetActive(true);
+        _videoImage.SetActive(true);
+        _videoPlayer.Prepare();
+        _videoPlayer.loopPointReached += OnMainMenuAnimationComplete;
+        _videoPlayer.Play();
     }
 
     public override void Tick()
@@ -33,11 +30,11 @@ public class MainScreenState : FSMState
 
     public override void Exit()
     {
-        _background.SetActive(true);
-        _logo.SetActive(true);
+        _videoImage.SetActive(false);
+        _fader.SetActive(true);
     }
 
-    public void OnMainMenuAnimationComplete()
+    public void OnMainMenuAnimationComplete(UnityEngine.Video.VideoPlayer vp)
     {
         _fsm.Transition<HeroScreenState>();
     }
