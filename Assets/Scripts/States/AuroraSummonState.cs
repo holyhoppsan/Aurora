@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FSM;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -30,6 +31,10 @@ public class AuroraSummonState : FSMState
     private int _currentCornerIndex;
     private bool _inSequence;
 
+    private List<Material> _cursorMaterials;
+
+    private float _curentAnimationCounter = 1.0f;
+
     public override void Enter()
     {
         if (_director != null)
@@ -38,15 +43,28 @@ public class AuroraSummonState : FSMState
             _director.time = 0;
             _director.Evaluate();
         }
+        _cursorMaterials = new List<Material>();
+        _cursorMaterials.Clear();
+        _cursorMaterials.Add(_topLeftCorner.material);
+        _cursorMaterials.Add(_topRightCorner.material);
+        _cursorMaterials.Add(_bottomRightCorner.material);
+        _cursorMaterials.Add(_bottomLeftCorner.material);
 
         Color color = Color.white;
         color.a = 0.0f;
+
+        _cursorMaterials[0].SetColor("_Color", color);
+        _cursorMaterials[1].SetColor("_Color", color);
+        _cursorMaterials[2].SetColor("_Color", color);
+        _cursorMaterials[3].SetColor("_Color", color);
+
         _topLeftCorner.color = color;
         _topRightCorner.color = color;
         _bottomRightCorner.color = color;
         _bottomLeftCorner.color = color;
 
         _currentCornerIndex = 0;
+        _curentAnimationCounter = 1.0f;
         _inSequence = true;
 
         _cameraController.SwitchCamera("AuroraView");
@@ -63,6 +81,13 @@ public class AuroraSummonState : FSMState
 
         if (_inSequence)
         {
+            _curentAnimationCounter = Mathf.Max(_curentAnimationCounter - Time.deltaTime, 0.0f);
+
+            if (_curentAnimationCounter == 0.0f)
+            {
+                _curentAnimationCounter = 1.0f;
+            }
+
             switch (_currentCornerIndex)
             {
                 case 0:
@@ -71,9 +96,13 @@ public class AuroraSummonState : FSMState
                         color.a = 1.0f;
                         _topLeftCorner.color = color;
 
+                        _cursorMaterials[_currentCornerIndex].SetFloat("_Size", _curentAnimationCounter);
+
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _topLeftCorner.rectTransform))
                         {
                             _topLeftCorner.color = Color.green;
+                            _cursorMaterials[_currentCornerIndex].SetColor("_Color", Color.green);
+                            _cursorMaterials[_currentCornerIndex].SetFloat("_Size", 0.1f);
                             _currentCornerIndex++;
                         }
                     }
@@ -87,6 +116,8 @@ public class AuroraSummonState : FSMState
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _topRightCorner.rectTransform))
                         {
                             _topRightCorner.color = Color.green;
+                            _cursorMaterials[_currentCornerIndex].SetColor("_Color", Color.green);
+                            _cursorMaterials[_currentCornerIndex].SetFloat("_Size", 0.1f);
                             _currentCornerIndex++;
                         }
                     }
@@ -100,6 +131,8 @@ public class AuroraSummonState : FSMState
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _bottomRightCorner.rectTransform))
                         {
                             _bottomRightCorner.color = Color.green;
+                            _cursorMaterials[_currentCornerIndex].SetColor("_Color", Color.green);
+                            _cursorMaterials[_currentCornerIndex].SetFloat("_Size", 0.1f);
                             _currentCornerIndex++;
                         }
                     }
@@ -113,6 +146,8 @@ public class AuroraSummonState : FSMState
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _bottomLeftCorner.rectTransform))
                         {
                             _bottomLeftCorner.color = Color.green;
+                            _cursorMaterials[_currentCornerIndex].SetColor("_Color", Color.green);
+                            _cursorMaterials[_currentCornerIndex].SetFloat("_Size", 0.1f);
                             _currentCornerIndex++;
                         }
                     }
