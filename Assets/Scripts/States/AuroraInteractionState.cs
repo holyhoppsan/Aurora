@@ -23,6 +23,7 @@ public class AuroraInteractionState : FSMState
         }
 
         _cameraController.SwitchCamera("AuroraView");
+        _auroras.GetComponent<AuroraController>()._AuroraFade = 1.0f;
         _auroras.SetActive(true);
     }
 

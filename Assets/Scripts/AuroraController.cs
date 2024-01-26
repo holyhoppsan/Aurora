@@ -6,7 +6,7 @@ public class AuroraController : MonoBehaviour
 {
     [SerializeField]
     [Range(0.0f, 1.0f)]
-    private float _AuroraFade = 0.0f;
+    public float _AuroraFade = 0.0f;
     private List<Material> _cachedMaterials;
 
     void Awake()
