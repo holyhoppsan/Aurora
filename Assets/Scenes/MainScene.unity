@@ -342,6 +342,7 @@ MonoBehaviour:
   _director: {fileID: 378118248}
   _cameraController: {fileID: 1465574763}
   _auroras: {fileID: 369897709}
+  _stateDuration: 20
 --- !u!114 &105618551
 MonoBehaviour:
   m_ObjectHideFlags: 0
