@@ -4350,6 +4350,7 @@ MonoBehaviour:
   _avenMaterial: {fileID: 2100000, guid: a8b15f44325364f1ea9f2dd1d7a8d6eb, type: 2}
   _emissiveBoostSpeed: 0.1
   _emissiveBoostCooldown: 0.02
+  _boostCompletionThreshold: 0.7
   _leftHandTransform: {fileID: 2012325024}
   _rightHandTransform: {fileID: 1239523512}
 --- !u!114 &1727181956

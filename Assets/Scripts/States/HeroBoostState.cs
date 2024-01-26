@@ -30,6 +30,9 @@ public class HeroBoostState : FSMState
     private float _emissiveBoostCooldown;
 
     [SerializeField]
+    private float _boostCompletionThreshold = 1.0f;
+
+    [SerializeField]
     private Transform _leftHandTransform;
 
     [SerializeField]
@@ -65,10 +68,10 @@ public class HeroBoostState : FSMState
             PointInsideFlowerBox(_inputManager.RightCursorScreenPosition))
         {
             _currentEmissive += Time.deltaTime * _emissiveBoostSpeed;
-            _currentEmissive = Mathf.Min(1.0f, _currentEmissive);
+            _currentEmissive = Mathf.Min(_boostCompletionThreshold, _currentEmissive);
         }
 
-        if (_currentEmissive < 1.0f)
+        if (_currentEmissive < _boostCompletionThreshold)
         {
             _currentEmissive = Mathf.Max(0.0f, _currentEmissive - (Time.deltaTime * _emissiveBoostCooldown));
         }
