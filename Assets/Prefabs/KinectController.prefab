@@ -266,7 +266,7 @@ MonoBehaviour:
   maxLeftRightDistance: 0
   maxTrackedUsers: 6
   showAllowedUsersOnly: 0
-  userDetectionOrder: 0
+  userDetectionOrder: 1
   ignoreInferredJoints: 1
   ignoreZCoordinates: 0
   jointPositionSmoothing: 1
