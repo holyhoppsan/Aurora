@@ -9,8 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1269014037194680838}
+  - component: {fileID: 6287785351116107770}
   - component: {fileID: 6917899431423039358}
   - component: {fileID: 3115054874582008732}
+  - component: {fileID: 4809242783414141291}
   m_Layer: 0
   m_Name: AuroraPlane
   m_TagString: Untagged
@@ -33,6 +35,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!114 &6287785351116107770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6189103868765002596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16552ba68662844a4a3be7c2f0f74a22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _leftCursorTransform: {fileID: 0}
+  _inputManager: {fileID: 0}
+  _radius: 0.5
 --- !u!33 &6917899431423039358
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -83,3 +100,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4809242783414141291
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6189103868765002596}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.3, y: 16.000006, z: 10}
+  m_Center: {x: 0, y: 0, z: 1.0000004}

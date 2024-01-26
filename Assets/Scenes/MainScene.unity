@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0072651245, g: 0.007373152, b: 0.007961164, a: 1}
+  m_IndirectSpecularColor: {r: 0.007203019, g: 0.0073885648, b: 0.007908998, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2798,9 +2798,6 @@ MonoBehaviour:
   _mouseInputEnabled: 1
   _configurableFarPlane: 1
   _configurableNearPlane: 0
-  sensorTransform: {fileID: 330585546}
-  scaleFactors: {x: 1, y: 1, z: 1}
-  playerIndex: 0
 --- !u!4 &1029471666
 Transform:
   m_ObjectHideFlags: 0
@@ -3910,6 +3907,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6287785351116107770, guid: cf127b7a9927547029f5d397eb343b12,
+        type: 3}
+      propertyPath: _inputManager
+      value: 
+      objectReference: {fileID: 1029471665}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4695,6 +4697,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AuroraPlane (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6287785351116107770, guid: cf127b7a9927547029f5d397eb343b12,
+        type: 3}
+      propertyPath: _inputManager
+      value: 
+      objectReference: {fileID: 1029471665}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5879,6 +5886,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: AuroraPlane
       objectReference: {fileID: 0}
+    - target: {fileID: 6287785351116107770, guid: cf127b7a9927547029f5d397eb343b12,
+        type: 3}
+      propertyPath: _inputManager
+      value: 
+      objectReference: {fileID: 1029471665}
+    - target: {fileID: 6287785351116107770, guid: cf127b7a9927547029f5d397eb343b12,
+        type: 3}
+      propertyPath: _leftCursorTransform
+      value: 
+      objectReference: {fileID: 2012325024}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

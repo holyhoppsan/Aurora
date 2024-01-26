@@ -23,9 +23,9 @@ public class AuroraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (var material in _cachedMaterials)
+        foreach (var component in GetComponentsInChildren<AuroraInstanceController>())
         {
-            material.SetFloat("_FadeIntensity", _AuroraFade);
+            component.fadeIntensity = _AuroraFade;
         }
     }
 }
