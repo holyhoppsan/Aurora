@@ -97,7 +97,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DisplacementIntensity: 2
+    - _DisplacementIntensity: 4
     - _DissolvePower: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
@@ -123,10 +123,10 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _WobbleAmount: 0.483
-    - _WobbleAmplitude: 0.05
+    - _WobbleAmplitude: 0.5
     - _WobbleDistance: 0.5
     - _WobbleFrequency: 12
-    - _WobbleSpeed: 0.4
+    - _WobbleSpeed: 0.5
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
