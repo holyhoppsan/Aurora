@@ -113,6 +113,8 @@ public class AuroraSummonState : FSMState
                         color.a = 1.0f;
                         _topRightCorner.color = color;
 
+                        _cursorMaterials[_currentCornerIndex].SetFloat("_Size", _curentAnimationCounter);
+
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _topRightCorner.rectTransform))
                         {
                             _topRightCorner.color = Color.green;
@@ -128,6 +130,8 @@ public class AuroraSummonState : FSMState
                         color.a = 1.0f;
                         _bottomRightCorner.color = color;
 
+                        _cursorMaterials[_currentCornerIndex].SetFloat("_Size", _curentAnimationCounter);
+
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _bottomRightCorner.rectTransform))
                         {
                             _bottomRightCorner.color = Color.green;
@@ -142,6 +146,8 @@ public class AuroraSummonState : FSMState
                         Color color = _bottomLeftCorner.color;
                         color.a = 1.0f;
                         _bottomLeftCorner.color = color;
+
+                        _cursorMaterials[_currentCornerIndex].SetFloat("_Size", _curentAnimationCounter);
 
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _bottomLeftCorner.rectTransform))
                         {
