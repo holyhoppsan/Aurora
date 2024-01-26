@@ -97,6 +97,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DisplacementIntensity: 2
     - _DissolvePower: 0
     - _DstBlend: 0
     - _DstBlendAlpha: 0
@@ -113,6 +114,7 @@ Material:
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Radius: 0.5
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -120,7 +122,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _WobbleAmount: 1
+    - _WobbleAmount: 0
     - _WobbleAmplitude: 10
     - _WobbleDistance: 5
     - _WobbleFrequency: 12
@@ -130,6 +132,7 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 2.3773582, b: 1.0710237, a: 1}
+    - _CursorPoint: {r: 0, g: 0, b: 0, a: 0}
     - _DissolveOffset: {r: 0.005, g: 0.005, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Lerp: {r: 1, g: 0, b: 0, a: 0}
