@@ -57,7 +57,7 @@ public class AuroraInstanceController : MonoBehaviour
 
     private Vector3 GetHitPosition(Vector2 screenPos)
     {
-        Ray ray = Camera.main.ScreenPointToRay(_inputManager.LeftCursorScreenPosition);
+        Ray ray = Camera.main.ScreenPointToRay(screenPos);
         RaycastHit hit;
 
         Vector3 leftCursorPosition = new Vector3();
