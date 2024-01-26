@@ -46,6 +46,7 @@ public class IdleScreenState : FSMState
 
     public override void Exit()
     {
+        _videoPlayer.Stop();
         _videoImage.SetActive(false);
     }
 

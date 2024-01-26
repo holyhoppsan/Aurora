@@ -204,65 +204,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _kinectManager: {fileID: 6545746860954140290}
   _playerMaterial: {fileID: 2100000, guid: cd5f88d3af167564f8b2dead3de9263a, type: 2}
---- !u!1 &4192467219683256636
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 323660844009806540}
-  - component: {fileID: 7898222215527772804}
-  m_Layer: 0
-  m_Name: CursorMapper
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &323660844009806540
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4192467219683256636}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6698073778608581309}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7898222215527772804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4192467219683256636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c60755670a686e48b0cf28e99a9efe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _debugSkeletonEnabled: 0
-  jointPrefab: {fileID: 4646339965450479195, guid: d668dab134929cb448e9e076504611c1,
-    type: 3}
-  linePrefab: {fileID: 5178041537707598492, guid: fbbe94bc3efe66f40b8b7b9c28e6a1fc,
-    type: 3}
-  playerIndex: 0
-  sensorTransform: {fileID: 0}
-  scaleFactors: {x: 1, y: 1, z: 1}
-  _leftTransform: {fileID: 0}
-  _rightTransform: {fileID: 0}
-  _leftCameraWorldTransform: {fileID: 0}
-  _rightCameraWorldTransform: {fileID: 0}
-  _mainCamera: {fileID: 0}
-  _configurableFarPlane: 0.9
-  _configurableNearPlane: 0.1
 --- !u!1 &7019452147628907460
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +236,6 @@ Transform:
   m_Children:
   - {fileID: 1118365082169164240}
   - {fileID: 5721232075539438810}
-  - {fileID: 323660844009806540}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6545746860954140290
