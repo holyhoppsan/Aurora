@@ -2,6 +2,9 @@ using FSM;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.Playables;
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+using com.rfilkov.kinect;
+#endif
 
 public class IdleScreenState : FSMState
 {
@@ -20,6 +23,13 @@ public class IdleScreenState : FSMState
     [SerializeField]
     private Material _avenMaterial;
 
+    [SerializeField]
+    private float _bootWait = 5.0f;
+
+    private float _currentBootTimer = 0.0f;
+
+    private bool _isBooting = false;
+
     public override void Enter()
     {
         SetupDefaultValues();
@@ -34,10 +44,37 @@ public class IdleScreenState : FSMState
         _videoImage.SetActive(true);
         _videoPlayer.Play();
         _cameraController.SwitchCamera("FlowerZoomInView");
+
+        _currentBootTimer = 0.0f;
+        _isBooting = false;
     }
 
     public override void Tick()
     {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+        KinectManager kinectManager = KinectManager.Instance;
+
+        if (kinectManager && kinectManager.IsInitialized())
+        {
+            if (kinectManager.IsUserDetected(0))
+            {
+                if (!_isBooting)
+                {
+                    _currentBootTimer += Time.deltaTime;
+                    Debug.Log($"Counting {_currentBootTimer}");
+
+                    if (_currentBootTimer > _bootWait)
+                    {
+                        Debug.Log($"booting");
+                        _director.Play();
+                        _isBooting = true;
+                    }
+                }
+            }
+        }
+
+#endif
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             _director.Play();

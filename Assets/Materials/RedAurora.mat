@@ -131,13 +131,15 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0, g: 2.3773582, b: 1.0710237, a: 1}
+    - _Color: {r: 0.77991456, g: 0, b: 0.008166754, a: 1}
     - _CursorPoint: {r: 0, g: 0, b: 0, a: 0}
     - _DissolveOffset: {r: 0.005, g: 0.005, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LeftCursorPoint: {r: 0, g: 0, b: 0, a: 0}
     - _Lerp: {r: 1, g: 0, b: 0, a: 0}
     - _NoiseSpeed: {r: 0, g: -0.05, b: 0, a: 0}
     - _NoiseTiling: {r: 7, g: 0.1, b: 0, a: 0}
+    - _RightCursorPoint: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &3656324398872001715

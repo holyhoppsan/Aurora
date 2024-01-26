@@ -100,10 +100,11 @@ public class AuroraSummonState : FSMState
 
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _topLeftCorner.rectTransform))
                         {
-                            _topLeftCorner.color = Color.green;
-                            _cursorMaterials[_currentCornerIndex].SetColor("_Color", Color.green);
-                            _cursorMaterials[_currentCornerIndex].SetFloat("_Size", 0.1f);
-                            _currentCornerIndex++;
+                            UnlockCorner();
+                        }
+                        else if (IsCircleCollidingWithRectTransform(_inputManger.RightCursorScreenPosition, 32.0f, _topLeftCorner.rectTransform))
+                        {
+                            UnlockCorner();
                         }
                     }
                     break;
@@ -117,10 +118,11 @@ public class AuroraSummonState : FSMState
 
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _topRightCorner.rectTransform))
                         {
-                            _topRightCorner.color = Color.green;
-                            _cursorMaterials[_currentCornerIndex].SetColor("_Color", Color.green);
-                            _cursorMaterials[_currentCornerIndex].SetFloat("_Size", 0.1f);
-                            _currentCornerIndex++;
+                            UnlockCorner();
+                        }
+                        else if (IsCircleCollidingWithRectTransform(_inputManger.RightCursorScreenPosition, 32.0f, _topRightCorner.rectTransform))
+                        {
+                            UnlockCorner();
                         }
                     }
                     break;
@@ -134,10 +136,11 @@ public class AuroraSummonState : FSMState
 
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _bottomRightCorner.rectTransform))
                         {
-                            _bottomRightCorner.color = Color.green;
-                            _cursorMaterials[_currentCornerIndex].SetColor("_Color", Color.green);
-                            _cursorMaterials[_currentCornerIndex].SetFloat("_Size", 0.1f);
-                            _currentCornerIndex++;
+                            UnlockCorner();
+                        }
+                        else if (IsCircleCollidingWithRectTransform(_inputManger.RightCursorScreenPosition, 32.0f, _bottomRightCorner.rectTransform))
+                        {
+                            UnlockCorner();
                         }
                     }
                     break;
@@ -151,10 +154,11 @@ public class AuroraSummonState : FSMState
 
                         if (IsCircleCollidingWithRectTransform(_inputManger.LeftCursorScreenPosition, 32.0f, _bottomLeftCorner.rectTransform))
                         {
-                            _bottomLeftCorner.color = Color.green;
-                            _cursorMaterials[_currentCornerIndex].SetColor("_Color", Color.green);
-                            _cursorMaterials[_currentCornerIndex].SetFloat("_Size", 0.1f);
-                            _currentCornerIndex++;
+                            UnlockCorner();
+                        }
+                        else if (IsCircleCollidingWithRectTransform(_inputManger.RightCursorScreenPosition, 32.0f, _bottomLeftCorner.rectTransform))
+                        {
+                            UnlockCorner();
                         }
                     }
                     break;
@@ -171,6 +175,14 @@ public class AuroraSummonState : FSMState
                     }
             }
         }
+    }
+
+    private void UnlockCorner()
+    {
+        _topLeftCorner.color = Color.green;
+        _cursorMaterials[_currentCornerIndex].SetColor("_Color", Color.green);
+        _cursorMaterials[_currentCornerIndex].SetFloat("_Size", 0.1f);
+        _currentCornerIndex++;
     }
 
     public override void Exit()
